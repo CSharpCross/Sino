@@ -1,4 +1,5 @@
 ﻿using Castle.MicroKernel;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Sino.Web.Dependency;
 using System;
@@ -15,13 +16,22 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <summary>
         /// 创建依赖注入对象
         /// </summary>
-        public static IDependencyContainer CreateContainer(this ServiceCollection serviceCollection)
+        public static IWindsorContainer CreateContainer(this ServiceCollection serviceCollection)
         {
             var container = new WindsorContainer();
             container.Kernel.AddSubSystem(
                 SubSystemConstants.NamingKey,
-                new 
-                );
+                new DependencyInjectionNamingSubsystem()
+            );
+
+            if (serviceCollection == null)
+            {
+                return container;
+            }
+
+            container.Register(
+                Component.For<IWindsorContainer>().Instance(container)),
+                Component.For<IServiceProvider, ISupportRequiredService>().ImplementedBy<WindsorScopedServiceProvider>()
         }
     }
 }
