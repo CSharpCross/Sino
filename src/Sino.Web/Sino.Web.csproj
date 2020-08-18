@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>Sino.Web</PackageId>
+    <Version>2.1.0</Version>
+    <Authors>y-z-f</Authors>
+    <Company>CSharpCross</Company>
+    <Description>asp.net core核心库</Description>
+    <PackageProjectUrl>https://github.com/CSharpCross/Sino</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/CSharpCross/Sino</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>asp.net core;web framework;</PackageTags>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Castle.Windsor" Version="5.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
+  </ItemGroup>
+
+</Project>
