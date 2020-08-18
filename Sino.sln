@@ -10,6 +10,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sino.Web", "src\Sino.Web\Sino.Web.csproj", "{FEE0C519-2883-48A8-89B5-25E04D62BF50}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".global", ".global", "{237BDD08-56EC-4365-82E2-A553F674C16D}"
+	ProjectSection(SolutionItems) = preProject
+		ReadMe.md = ReadMe.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{93BB9B41-565F-491E-A96B-84C9014F3244}"
 EndProject
