@@ -2,4 +2,4 @@
 
 ## 一、Sino.Web  
 
-具体使用方式参考[该文档](https://github.com/CSharpCross/Sino/Docs/Sino_Web.md)
+具体使用方式参考[该文档](https://github.com/CSharpCross/Sino/blob/dev/docs/Sino_Web.md)
