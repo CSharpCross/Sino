@@ -2,11 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Sino.Web.Dependency.Scope;
 using System;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
 
-namespace Sino.Web
+namespace Sino.Web.Dependency
 {
     public class RegistrationAdapter
     {
