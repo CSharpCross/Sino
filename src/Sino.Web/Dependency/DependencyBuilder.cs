@@ -10,6 +10,7 @@ using Castle.MicroKernel.Registration;
 using Sino.Web.Dependency.Resolvers;
 using Sino.Dependency;
 using System.Reflection;
+using Sino.Web.Dependency.Scope;
 
 namespace Sino.Web.Dependency
 {
@@ -18,6 +19,8 @@ namespace Sino.Web.Dependency
     /// </summary>
     public class DependencyBuilder : IDependencyBuilder
     {
+        private readonly ExtensionContainerRootScope _rootScope;
+
         private IServiceCollection _serviceCollection;
 
         private List<Type> _types = new List<Type>();
@@ -27,6 +30,7 @@ namespace Sino.Web.Dependency
         public DependencyBuilder(IServiceCollection serviceCollection)
         {
             _serviceCollection = serviceCollection ?? throw new ArgumentNullException(nameof(serviceCollection));
+            _rootScope = ExtensionContainerRootScope.BeginRootScope();
             Init();
         }
 
@@ -64,7 +68,7 @@ namespace Sino.Web.Dependency
         {
             _container.Register(
                 Component.For<IWindsorContainer>().Instance(_container),
-                Component.For<IServiceProvider, ISupportRequiredService>().ImplementedBy<SinoScopedServiceProvider>(),
+                Component.For<IServiceProvider, ISupportRequiredService>().ImplementedBy<SinoScopedServiceProvider>().LifeStyle.Scoped<ExtensionContainerScopeAccessor>(),
                 Component.For<IServiceScopeFactory>().ImplementedBy<SinoScopeFactory>().LifestyleSingleton());
 
             _container.Kernel.Resolver.AddSubResolver(new RegisteredCollectionResolver(_container.Kernel));

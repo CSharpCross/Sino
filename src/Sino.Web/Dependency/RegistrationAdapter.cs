@@ -56,6 +56,28 @@ namespace Sino.Web.Dependency
             return result;
         }
 
+        public static IRegistration FromServiceDescriptor<TService>(Microsoft.Extensions.DependencyInjection.ServiceDescriptor service) where TService : class
+        {
+            var registration = Component.For<TService>()
+                .NamedAutomatically(UniqueComponentName(service));
+
+            if (service.ImplementationFactory != null)
+            {
+                registration = UsingFactoryMethod<TService>(registration, service);
+            }
+            else if (service.ImplementationInstance != null)
+            {
+                registration = UsingInstance<TService>(registration, service);
+            }
+            else if (service.ImplementationType != null)
+            {
+                registration = UsingImplementation<TService>(registration, service);
+            }
+
+            return ResolveLifestyle<TService>(registration, service)
+                .IsDefault();
+        }
+
         private static ComponentRegistration<TService> UsingImplementation<TService>(ComponentRegistration<TService> registration, Microsoft.Extensions.DependencyInjection.ServiceDescriptor service) where TService : class
         {
             return registration.ImplementedBy(service.ImplementationType);
@@ -74,6 +96,19 @@ namespace Sino.Web.Dependency
                 default:
                     throw new ArgumentException($"Invalid lifetime {service.Lifetime}");
             }
+        }
+
+        private static ComponentRegistration<TService> UsingFactoryMethod<TService>(ComponentRegistration<TService> registration, Microsoft.Extensions.DependencyInjection.ServiceDescriptor service) where TService : class
+        {
+            return registration.UsingFactoryMethod((kernel) => {
+                var serviceProvider = kernel.Resolve<System.IServiceProvider>();
+                return service.ImplementationFactory(serviceProvider) as TService;
+            });
+        }
+
+        private static ComponentRegistration<TService> UsingInstance<TService>(ComponentRegistration<TService> registration, Microsoft.Extensions.DependencyInjection.ServiceDescriptor service) where TService : class
+        {
+            return registration.Instance(service.ImplementationInstance as TService);
         }
     }
 }
