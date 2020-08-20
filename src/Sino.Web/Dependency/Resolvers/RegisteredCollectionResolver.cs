@@ -2,6 +2,7 @@
 using Castle.MicroKernel;
 using Castle.MicroKernel.Context;
 using Castle.MicroKernel.Resolvers.SpecializedResolvers;
+using System;
 
 namespace Sino.Web.Dependency.Resolvers
 {
@@ -24,7 +25,7 @@ namespace Sino.Web.Dependency.Resolvers
 
         public override object Resolve(CreationContext context, ISubDependencyResolver contextHandlerResolver, ComponentModel model, DependencyModel dependency)
         {
-            return base.Resolve(context, contextHandlerResolver, model, dependency);
+            return base.Resolve(context, contextHandlerResolver, model, dependency) as Array;
         }
     }
 }

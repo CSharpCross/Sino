@@ -42,7 +42,7 @@ namespace Sino.Web.Dependency
 
         public void Dispose()
         {
-            if (_scope is ExtensionContainerScope)
+            if (_scope is ExtensionContainerRootScope)
             {
                 if (!_disposing)
                 {

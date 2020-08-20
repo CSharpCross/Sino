@@ -2,10 +2,7 @@
 using Castle.MicroKernel;
 using Castle.MicroKernel.Context;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 
 namespace Sino.Web.Dependency.Resolvers
 {

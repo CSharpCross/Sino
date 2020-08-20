@@ -26,7 +26,7 @@ namespace Sino.Web.Dependency
 
         public override IHandler[] GetHandlers(Type service)
         {
-            _ = service ?? throw new ArgumentNullException();
+            _ = service ?? throw new ArgumentNullException(nameof(service));
 
             if (filters != null)
             {
@@ -79,7 +79,7 @@ namespace Sino.Web.Dependency
                 }
 
                 var handlerCandidates = base.GetHandlers(openService);
-                return handlerCandidates.First(x => x.Supports(service));
+                return handlerCandidates.FirstOrDefault(x => x.Supports(service));
             }
 
             return null;
