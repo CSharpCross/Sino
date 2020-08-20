@@ -37,5 +37,28 @@ namespace Sino.Web.Test
 
             Assert.True(IsProxy(calcService));
         }
+
+        [Fact]
+        public void CanSetInterceptorWithType()
+        {
+            _serviceCollection.AddTransient<ICalcService, CalculatorServiceWithStandartInterceptorTyped>();
+            var container = _serviceCollection.CreateContainer().AddInterceptor<SinoInterceptor>().Build();
+
+            var calcService = container.GetService<ICalcService>();
+
+            Assert.True(IsProxy(calcService));
+        }
+
+        [Fact]
+        public void CanSetInterceptorWithMany()
+        {
+            _serviceCollection.AddTransient<ICalcService, CalculatorServiceWithStandartInterceptorTwo>();
+            var container = _serviceCollection.CreateContainer().AddInterceptor<SinoInterceptor>().AddInterceptor<SinoInterceptor>("FooInterceptor").Build();
+
+            var calcService = container.GetService<ICalcService>();
+
+            Assert.True(IsProxy(calcService));
+            Assert.Equal(2, GetInterceptors(calcService).Length);
+        }
     }
 }
