@@ -9,7 +9,7 @@ namespace Sino.Web.Test
     {
         protected override IServiceProvider CreateServiceProvider(IServiceCollection serviceCollection)
         {
-            return serviceCollection.CreateContainer();
+            return serviceCollection.CreateContainer().Build();
         }
     }
 }
