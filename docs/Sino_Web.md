@@ -165,14 +165,14 @@ app.UseGlobalExceptionHandler(LogManager.GetCurrentClassLogger());
 
 
 ## 其他
-#### JSON序列化
+### JSON序列化
 为了避免直接使用静态类，该类库中提供了`IJsonConvertProvider`接口将`JSON.NET`进行了封装，对于程序中需要使用到的地方请采用
 该接口，该接口已经纳入IOC中，只需要在StartUp中进行添加即可：  
 `
 services.AddJson();
 `
 
-#### 自动IOC注入
+### 自动IOC注入
 为了避免在后期大量的服务需要手动注入，利用`Scrutor`类库实现了自动根据名字进行IOC注入，默认规则为根据类名前加`I`的方式自动进行
 注入，当然还有继承了接口`ISingletonDependency`和`ITransientDependency`才可以被自动注入，并按照规定的方式进行，以下就是如何使用的方式：
 ```
@@ -182,7 +182,9 @@ public void ConfigureServices(IServiceCollection services)
     services.AutoDependency(typeof(IAInterface),typeof(IBInterface));
 ```
 
-#### 验证自动注入
+更详细的使用方式请参考[该文档](https://github.com/CSharpCross/Sino/blob/dev/docs/Sino_Web_Dependency.md)
+
+### 验证自动注入
 为了方便验证，这里将原本原始的初始化方式改为自动IOC注入的方式，对于需要验证的对象需要如下所示来对该实体模型进行验证：
 ```
 public class UserValidator : BaseRequestValidator<User>
