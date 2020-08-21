@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <PackageReference Include="Castle.Windsor" Version="5.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="2.1.1" />
@@ -24,7 +25,7 @@
 
   <ItemGroup>
     <Folder Include="Application\Services\" />
-    <Folder Include="Middleware\" />
+    <Folder Include="Runtime\" />
   </ItemGroup>
 
 </Project>
