@@ -25,10 +25,6 @@ namespace Microsoft.AspNetCore.Builder
 
 		private static ILogger _log;
 
-		private static string _originUrl;
-
-		private static bool _isAllow;
-
 		public static IApplicationBuilder UseGlobalExceptionHandler(this IApplicationBuilder app, ILoggerFactory loggerFactory)
 		{
 			if (app == null)
@@ -43,31 +39,10 @@ namespace Microsoft.AspNetCore.Builder
 			});
 		}
 
-		public static IApplicationBuilder UseGlobalExceptionHandler(this IApplicationBuilder app, ILoggerFactory loggerFactory, bool isAllow, string originUrl)
-		{
-			if (app == null)
-				throw new ArgumentNullException(nameof(app));
-			if (loggerFactory == null)
-				throw new ArgumentNullException(nameof(loggerFactory));
-
-			_isAllow = isAllow;
-			_originUrl = originUrl;
-			_log = loggerFactory.CreateLogger(EXCEPTION_ERROR_NAME);
-			return app.UseExceptionHandler(new ExceptionHandlerOptions
-			{
-				ExceptionHandler = Invoke
-			});
-		}
-
 		public static async Task Invoke(HttpContext context)
 		{
 			context.Response.StatusCode = 200;
 			context.Response.ContentType = "application/json";
-			if (_isAllow)
-			{
-				context.Response.Headers.Add("Access-Control-Allow-Origin", _originUrl);
-				context.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
-			}
 
 			BaseResponse response = new BaseResponse
 			{
@@ -76,22 +51,24 @@ namespace Microsoft.AspNetCore.Builder
 				errorMessage = DEFAULT_ERROR_MESSAGE
 			};
 
-			Exception ex = context.Features.Get<IExceptionHandlerFeature>().Error;
-			if (ex is SinoException)
+			var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerFeature>();
+			if (exceptionHandlerPathFeature?.Error is SinoException)
 			{
-				var sex = ex as SinoException;
+				var sex = exceptionHandlerPathFeature.Error as SinoException;
 				response.errorCode = sex.Code.ToString();
 				response.errorMessage = sex.Message;
 			}
 
-			var errorLog = new
+			if (exceptionHandlerPathFeature?.Error != null)
 			{
-                context.Request.Path,
-                context.TraceIdentifier,
-                ex.Message
-			};
-			_log.LogError(ex, JsonConvert.SerializeObject(errorLog));
-
+				var errorLog = new
+				{
+					context.Request.Path,
+					context.TraceIdentifier,
+					exceptionHandlerPathFeature.Error.Message
+				};
+				_log.LogError(exceptionHandlerPathFeature.Error, JsonConvert.SerializeObject(errorLog));
+			}
 			await context.Response.WriteAsync(JsonConvert.SerializeObject(response));
 		}
 	}
