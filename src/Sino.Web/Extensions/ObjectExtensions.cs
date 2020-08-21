@@ -1,9 +1,14 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using System;
 using System.Globalization;
 using System.Linq;
 
 namespace System
 {
+	/// <summary>
+	/// 基础类型扩展
+	/// </summary>
     public static class ObjectExtensions
 	{
 		/// <summary>
@@ -14,10 +19,30 @@ namespace System
 			return (T)obj;
 		}
 
-        /// <summary>
-        /// 利用<see cref="Convert.ChangeType(object,TypeCode)"/>方法转换类型
-        /// </summary>
-        public static T To<T>(this object obj)
+		/// <summary>
+		/// 将实体转换为Json字符串
+		/// </summary>
+		public static string ToJsonString(this object obj, bool camelCase = false, bool indented = false)
+		{
+			var options = new JsonSerializerSettings();
+
+			if (camelCase)
+			{
+				options.ContractResolver = new CamelCasePropertyNamesContractResolver();
+			}
+
+			if (indented)
+			{
+				options.Formatting = Formatting.Indented;
+			}
+
+			return JsonConvert.SerializeObject(obj, options) == "null" ? "[]" : JsonConvert.SerializeObject(obj, options);
+		}
+
+		/// <summary>
+		/// 利用<see cref="Convert.ChangeType(object,TypeCode)"/>方法转换类型
+		/// </summary>
+		public static T To<T>(this object obj)
 			where T : struct
 		{
 			return (T)Convert.ChangeType(obj, typeof(T), CultureInfo.InvariantCulture);

@@ -9,12 +9,12 @@
 Install-Package Sino.Web
 ```
 
-# 文档
-下面将按照依次进行说明，我们将按照常规项目的流程来介绍如何使用该SDK中的特性。
+# 领域开发标准
+下面将介绍如何使用DDD进行业务系统的开发。  
 
 ## 领域层
 
-#### 领域模型
+### 领域模型
 按照规定所有的领域模型必须继承自`FullAuditedEntity<TPrimaryKey>`虚类，其中`TPrimaryKey`是用于规定主键的类型，为了能够和仓储
 层自动配合建议使用`Guid`以及`Int`类型，为什么需要继承该模型，因为该模型中集成了我们正常开发中需要使用的常用字段，
 具体如下所示：  
@@ -43,12 +43,14 @@ Install-Package Sino.Web
 * `CreationAuditedEntity`：只包含创建信息。
 * `Entity`：不包含任何审计功能。
 
-#### 领域服务
+### 领域服务
 因为当前领域服务存在数量不多，所以只约定了需要统一继承的公共类为`DomainService`。
+
+------
 
 ## 仓储层
 
-#### 仓储接口
+### 仓储接口
 准确的说仓储层所定义的接口在项目结构上是保存在领域层的项目中，以此规范仓储层的实现。具体需要继承的仓储接口需要根据根据
 对应的实体模型的情况而决定，如果实体模型的主键类型为`Int`则对应的仓储接口则需要继承自`IRepository<TEntity>`，如果不是
 该类型则需要继承自`IRepository<TEntity, TPrimaryKey>`，他们都是默认有很多常用的方法，当然这些方案并不需要我们自行实现。  
@@ -61,22 +63,24 @@ Install-Package Sino.Web
 PS：这里我们也考虑过使用动态的方式，当时这种方式肯定会有所牺牲并且需要进行单独的后台管理，如果后期这部分的修改需求较多，我们
 可能会考虑采用动态的方式进行管理。
 
-#### 仓储实现
+### 仓储实现
 如果不使用我们其他的基础类库，则用户需要在仓储层实现类上除了需要实现具体的仓储接口外，还需要继承自`AbpRepositoryBase<TEntity, TPrimaryKey>`
 虚类，以便于后期如果需要使用我们提供的类库降低切换的成本。
 
+------
+
 ## 应用层（服务层）
 
-#### 应用接口
+### 应用接口
 在完成领域层的功能之后我们还不能直接就开始编写具体的接口，这中间还需要应用层进行协调，而所有的应用层接口都需要继承自
 `IApplicationService`接口，这样便于后期在应用层中增加通用服务等，同时也便于后期我们的程序集扫描。
 
-#### 应用实现
+### 应用实现
 在我们实现具体的应用服务同时，除了需要实现具体业务的应用接口还需要继承公共的类库`ApplicationService`，以便提供公共的基础服务,
 其中我们已经提供了部分服务，具体服务如下所示：
 * `StringToGuid(s:String):Guid?`：将字符串转换为Guid类型，如果无法转换则返回Null。  
 
-#### 数据传输对象（DTO）
+### 数据传输对象（DTO）
 在表现层与应用层的交互过程中还存在一种模型用于进行数据的传输，在单一应用的情况下该DTO可以暂时共享领域模型，但是对于分布式的应用
 或微服务来说，该对象需要独立编写，而在该类库中也提供了一套标准的对象，所有的应用接口的入参必须为对象且需要实现接口`IInputDto`，
 如果该应用层接口恰好是需要获取的列表数据并需要分页那么我们也提供了对应的模型`PagedInputDto`其中规范了`Skip`和`Take`参数，避免
@@ -85,13 +89,15 @@ PS：这里我们也考虑过使用动态的方式，当时这种方式肯定会
 进行组织数据。  
 但是随着我们后期全面采用gRpc进行通信，这些标准会采用`base.proto`进行表示，所以具体gRcp的DTO模型请根据实际情况做调整。
 
+------
+
 ## 表现层
 
-#### 视图模型
+### 视图模型
 对于大多情况来说，该组件已经采用`ASP.NET CORE`的技术进行的标准化，但是对于列表数据，用户需要利用`ListResponse<T>`进行组织，如果
 遇到特殊情况需要自行输出最外层接口的数据可以参考模型`BaseResponse`和`BaseResponse<T>`。
 
-#### 输出标准化
+### 输出标准化
 前面我说的大部分情况下输出会自动进行包装，但是要实现这一特性还需要其他的配置，我们需要打开StartUp文件并在`services.AddMvc`中进行注册
 比如以下代码为注册:  
 `
@@ -105,6 +111,61 @@ services.AddMvc(x =>
 等不属于`ObjectResult`，因为该行为会导致所有的输出都进行包装，为了让用户能够排除特定的接口，可以利用`[GlobalResult]`过滤不需要进行封装
 的接口即可。
 
+## 其他功能组件
+
+### 日志服务  
+
+由于默认的日志框架的缺点，我们需要将日志通过`Logstash`传输到`ElasticSearch`上进行存储，所以我们需要将默认日志框架的背后实现逻辑采用
+其他的日志框架进行替换，为此我们需要在项目中进行相关的配置以实现此目的，下面我们将介绍如何使用对应的日志框架。  
+
+首先我们需要打开`Program`文件并使用`UseLog`使用对应日志框架：   
+
+```csharp
+var host = new WebHostBuilder()
+    .UseKestrel()
+    .UseUrls("http://*:5000")
+    .UseStartup<Startup>()
+    .UseLog()
+    .Build();
+```
+
+完成以上配置仅仅只是将默认的日志框架进行了替换，我们还需要进行相关的配置以实现将我们需要的日志输出到对应的目标，所以我们需要先编写对应
+的日志文件，如（nlog.config）具体还需要根据实际的运行环境进行调整：  
+
+```xml
+<?xml version="1.0" encoding="utf-8" ?>
+<nlog xmlns="http://www.nlog-project.org/schemas/NLog.xsd"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      autoReload="true"
+      throwConfigExceptions="true"
+      internalLogLevel="Debug"
+      internalLogToTrace="true">
+  <targets>
+    <target name="lognet"
+            xsi:type="Network"
+             address="udp://10.247.107.52:4561" >
+      <layout xsi:type="JsonLayout">
+        <attribute name="type" layout="iotadapter" />
+        <attribute name="date" layout="${longdate}" />
+        <attribute name="level" layout="${level:uppercase=true}" />
+        <attribute name="callSite" layout="${callsite:className=true:methodName=true:skipFrames=1}" />
+        <attribute name="message" layout="${message}" />
+        <attribute name="exception" layout="${exception:format=toString,Data}" />
+        <attribute name="fileName" layout="${callsite:fileName=true:includeSourcePath=true}" />
+      </layout>
+    </target>
+    <target name="console"
+        xsi:type="ColoredConsole"
+        layout="${longdate} [${level:uppercase=true}] ${callsite:className=true:methodName=true:skipFrames=1} ${message} ${exception:format=toString,Data} @${callsite:fileName=true:includeSourcePath=true}"/>
+    <target xsi:type="Null" name="blackhole" />
+  </targets>
+  <rules>
+    <logger name="Microsoft.*" minLevel="Trace" writeTo="blackhole" final="true" />
+    <logger name="System.*" minLevel="Trace" writeTo="blackhole" final="true" />
+    <logger name="*" minlevel="Error" writeTo="lognet,console" />
+  </rules>
+</nlog>
+```
 
 #### 接口校验
 如今移动平台开始热门起来，但是基于当前的网络通信安全，仅仅利用Https和JWT方式并不能有效的防止用户信息外泄，为了防止请求内容被拦截后造成
