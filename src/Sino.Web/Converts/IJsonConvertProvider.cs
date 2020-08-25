@@ -1,7 +1,7 @@
 ﻿using Sino.Dependency;
 using System.Threading.Tasks;
 
-namespace Sino.Web.Convert
+namespace Sino.Web.Converts
 {
     /// <summary>
     /// Json转换服务

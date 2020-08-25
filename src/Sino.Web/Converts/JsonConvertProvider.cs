@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Sino.Web.Convert
+namespace Sino.Web.Converts
 {
     public class JsonConvertProvider : IJsonConvertProvider
 	{

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 using NLog.Web;
-using Sino.Web.Convert;
+using Sino.Web.Converts;
 using Sino.Web.Dependency;
 
 namespace Microsoft.Extensions.DependencyInjection
