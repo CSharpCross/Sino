@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Microsoft.AspNetCore.Builder
 {
+	/// <summary>
+	/// 异常默认输出
+	/// </summary>
     public static class ExceptionHandlerMiddleware
 	{
 		public const string EXCEPTION_ERROR_NAME = "GlobalError";

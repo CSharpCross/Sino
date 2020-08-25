@@ -22,7 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{93BB9B41-5
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sino.Web.Test", "test\Sino.Web.Test\Sino.Web.Test.csproj", "{D34BA19C-7549-4BDD-A4BA-67A6ABC156AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sino.Extensions.Dapper", "Sino.Extensions.Dapper\Sino.Extensions.Dapper.csproj", "{F6D3A9A8-08EC-453F-A4BA-187C311601A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sino.Extensions.Dapper", "src\Sino.Extensions.Dapper\Sino.Extensions.Dapper.csproj", "{F6D3A9A8-08EC-453F-A4BA-187C311601A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
