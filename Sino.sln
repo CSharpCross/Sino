@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{93BB9B41-5
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sino.Web.Test", "test\Sino.Web.Test\Sino.Web.Test.csproj", "{D34BA19C-7549-4BDD-A4BA-67A6ABC156AE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sino.Extensions.Dapper", "Sino.Extensions.Dapper\Sino.Extensions.Dapper.csproj", "{F6D3A9A8-08EC-453F-A4BA-187C311601A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,10 @@ Global
 		{D34BA19C-7549-4BDD-A4BA-67A6ABC156AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D34BA19C-7549-4BDD-A4BA-67A6ABC156AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D34BA19C-7549-4BDD-A4BA-67A6ABC156AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6D3A9A8-08EC-453F-A4BA-187C311601A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6D3A9A8-08EC-453F-A4BA-187C311601A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6D3A9A8-08EC-453F-A4BA-187C311601A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6D3A9A8-08EC-453F-A4BA-187C311601A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,6 +49,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{FEE0C519-2883-48A8-89B5-25E04D62BF50} = {FB3F4AC3-90A3-43DF-B6DF-626980EC93D0}
 		{D34BA19C-7549-4BDD-A4BA-67A6ABC156AE} = {5690169A-9A53-40FB-A334-8568C130C933}
+		{F6D3A9A8-08EC-453F-A4BA-187C311601A2} = {FB3F4AC3-90A3-43DF-B6DF-626980EC93D0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {13DB2F97-1074-464D-B816-32C912BFB68B}
