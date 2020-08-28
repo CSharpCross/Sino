@@ -167,7 +167,13 @@ var host = new WebHostBuilder()
 </nlog>
 ```
 
-#### 接口校验
+完成配置文件的编写后，我们需要告知日志系统对应的配置文件在哪，打开`Startup.cs`文件并在`Configure`方法中写入如下内容：  
+
+```csharp
+loggerFactory.ConfigureLog($"nlog.{env.EnvironmentName}.config");
+```
+
+### 接口安全校验
 如今移动平台开始热门起来，但是基于当前的网络通信安全，仅仅利用Https和JWT方式并不能有效的防止用户信息外泄，为了防止请求内容被拦截后造成
 严重的后果，我们还开发了接口校验的功能，会在每个接口请求前进行Token验证，并且该Token的有效时间可以控制，这样保证了请求被拦截后，超出有效
 时间后该请求无法进行，进一步的提高了接口的安全系数。  
@@ -176,7 +182,7 @@ var host = new WebHostBuilder()
 CheckSignatureFilter.Token = "123456fefef";
 services.AddMvc(x =>
 {
-     x.Filters.Add(typeof(CheckSignatureFilter));
+     x.Filters.AddService(typeof(CheckSignatureFilter));
 });
 `
 其中的算法如下：  

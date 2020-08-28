@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="aliyun-net-sdk-sts" Version="3.0.4" />
+    <PackageReference Include="Aliyun.OSS.SDK.NetCore" Version="2.11.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Specification.Tests" Version="2.1.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
