@@ -91,25 +91,89 @@ PS：这里我们也考虑过使用动态的方式，当时这种方式肯定会
 
 ------
 
-## 表现层
+## 扩展过滤器  
 
-### 视图模型
-对于大多情况来说，该组件已经采用`ASP.NET CORE`的技术进行的标准化，但是对于列表数据，用户需要利用`ListResponse<T>`进行组织，如果
-遇到特殊情况需要自行输出最外层接口的数据可以参考模型`BaseResponse`和`BaseResponse<T>`。
+### 标准输出  
+为了保证系统平台的标准输出，框架提供了对应MVC过滤器将输出内容进行统一的格式化，最终格式化的输出可以参考`BaseResponse`类，具体如下
+所示：  
 
-### 输出标准化
-前面我说的大部分情况下输出会自动进行包装，但是要实现这一特性还需要其他的配置，我们需要打开StartUp文件并在`services.AddMvc`中进行注册
-比如以下代码为注册:  
-`
+```csharp
+/// <summary>
+/// 视图输出根类
+/// </summary>
+public class BaseResponse
+{
+    /// <summary>
+    /// 错误消息
+    /// </summary>
+    public string errorMessage { get; set; }
+
+    /// <summary>
+    /// 错误代码
+    /// </summary>
+    public string errorCode { get; set; }
+
+    /// <summary>
+    /// 是否请求成功
+    /// </summary>
+    public bool success { get; set; }
+
+    /// <summary>
+    /// 数据对象
+    /// </summary>
+    public object data { get; set; }
+}
+```
+
+根据用户的实际情况，可以采用特定`Action`进行标准格式化也可以进行全局配置，如果是特定的方式可以通过在我们需要进行标准格式输出的
+`Action`上加上`StandardResultFilter`注解属性，比如下面这种使用方式：  
+
+```csharp
+[StandardResultFilter]
+public IActionResult Get()
+{
+    // todo
+}
+```
+
+如果需要默认全局则可以通过在`Startup`中在`AddMvc`中通过其`MvcOptions`进行添加比如以下方式我们就可以将标准输出
+作为全局过滤器进行使用：  
+
+```csharp
 services.AddMvc(x =>
 {
-  x.Filters.Add(typeof(GlobalResultFilter));
+   x.Filters.AddStandardResultFilter(services);
 });
-`
+```  
 
-但是其中有点要求，输出的只有为`EmptyResult`和`ObjectResult`才会进行包装就是最终的返回值为`void`以及`object`对象，当然`String`和`int`
-等不属于`ObjectResult`，因为该行为会导致所有的输出都进行包装，为了让用户能够排除特定的接口，可以利用`[GlobalResult]`过滤不需要进行封装
-的接口即可。
+由于全局使用了标准输出，如果遇到不希望使用其过滤器的我们依然可以通过使用该过滤器在不希望使用的`Action`上进行排
+除，比如下面就可以实现排除：  
+
+```csharp
+[StandardResultFilter(IsUse = false)]
+public IActionResult Get()
+{
+    // todo
+}
+```
+
+至此关于标准输出过滤器的使用方式就此结束。  
+
+### 全局日志  
+
+由于异常分析往往需要能够复现对应场景的情况，为此我们需要将对应请求的进参与出参进行记录以便于我们能够通过日志对其
+进行更好的分析，为此我们在基于MVC上增加了对应的过滤器以实现该功能，当然具体的使用方式依然如同上述过滤器，依然可以
+分为特定`Action`与全局，首先贴出针对性的使用方式：  
+
+```csharp
+[ActionLogFilter]
+public IActionResult Get()
+{
+    // todo
+}
+```
+
+
 
 ## 其他功能组件
 
