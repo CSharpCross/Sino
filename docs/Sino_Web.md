@@ -173,11 +173,60 @@ public IActionResult Get()
 }
 ```
 
+如果需要全局都能够支持，按照之前的方式，我们需要在`Startup`中使用如下代码：  
 
+```csharp
+services.AddMvc(x =>
+{
+   x.Filters.AddActionLogFilter(services);
+});
+```
 
-## 其他功能组件
+当然由于存在输入与输出，所以用户可以控制希望进行记录的日志，如果将输入与输出都关闭等于该过滤器不起任何作用，所以
+我们可以针对性部分不需要记录日志的`Action`进行关闭：  
 
-### 日志服务  
+```csharp
+[StandardResultFilter(Input = false, Output = false)]
+public IActionResult Get()
+{
+    // todo
+}
+```
+
+### 安全校验  
+
+应用仅仅依赖传统的令牌并不能完全保证请求不被拦截并破坏后重播，为此我们需要在原本的请求的基础上增加额外的令牌以保
+障请求即使在被拦截的情况依然可以提供有效的保障，为此我们在`MVC`增加了对应的过滤器，用户依然可以跟如上其他过滤器一
+样使用全局或者部分，以下将会给出对应的代码：  
+
+```csharp
+[CheckSignatureFilter(Token = "abc")]
+public IActionResult Get()
+{
+    // todo
+}
+```
+
+对应全局使用方式如下：  
+
+```csharp
+services.AddMvc(x =>
+{
+   x.Filters.AddCheckSignatureFilter(services, "abc");
+});
+```
+
+如果需要特定`Action`不使用则可以通过如下方式：  
+
+```csharp
+[CheckSignatureFilter(Use = false)]
+public IActionResult Get()
+{
+    // todo
+}
+```
+
+## 日志服务  
 
 由于默认的日志框架的缺点，我们需要将日志通过`Logstash`传输到`ElasticSearch`上进行存储，所以我们需要将默认日志框架的背后实现逻辑采用
 其他的日志框架进行替换，为此我们需要在项目中进行相关的配置以实现此目的，下面我们将介绍如何使用对应的日志框架。  
@@ -237,25 +286,6 @@ var host = new WebHostBuilder()
 loggerFactory.ConfigureLog($"nlog.{env.EnvironmentName}.config");
 ```
 
-### 接口安全校验
-如今移动平台开始热门起来，但是基于当前的网络通信安全，仅仅利用Https和JWT方式并不能有效的防止用户信息外泄，为了防止请求内容被拦截后造成
-严重的后果，我们还开发了接口校验的功能，会在每个接口请求前进行Token验证，并且该Token的有效时间可以控制，这样保证了请求被拦截后，超出有效
-时间后该请求无法进行，进一步的提高了接口的安全系数。  
-为了利用该特性，我们需要跟输出标准化的做法一样增加这一过滤器：  
-`
-CheckSignatureFilter.Token = "123456fefef";
-services.AddMvc(x =>
-{
-     x.Filters.AddService(typeof(CheckSignatureFilter));
-});
-`
-其中的算法如下：  
-`Signature=MD5(Token + timestamp + nonce)`  
-* `Token`：需要预先设定好。
-* `Timestamp`：Unix时间戳（单位秒）。
-* `nonce`：随机字符串。
-
-默认为120秒超时时间，如果有特定需要可以通过`CheckSignatureFilter.TimeOut`进行设置。对于不要进行校验的接口可以利用`[CheckSignature]`进行过滤。  
 
 #### 参数验证
 为了提高开发效率我们把参数的自动化验证功能利用FluentValidation解决了，想要在项目中利用该特性需打开`Startup`文件中进行注册。  
@@ -346,6 +376,7 @@ public ValuesController(IBaseRequestValidator<User> validator)
 * 2017.3.31 v1.1.22-beta2 将项目移到src下 by y-z-f
 * 2017.3.31 v1.1.22-beta3 增加支持IOC的参数验证 by y-z-f
 * 2018.3.7 v2.0.0-beta1 支持Asp.net Core 2.0并去除gRpc支持 by y-z-f
+* 2020.8.28
 
 ## 依赖类库
 ```

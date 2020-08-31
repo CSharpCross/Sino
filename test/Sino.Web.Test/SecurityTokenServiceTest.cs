@@ -3,8 +3,6 @@ using Aliyun.Acs.Core.Auth.Sts;
 using Aliyun.Acs.Core.Profile;
 using Aliyun.OSS;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace Sino.Web.Test
@@ -29,7 +27,7 @@ namespace Sino.Web.Test
             request.AcceptFormat = Aliyun.Acs.Core.Http.FormatType.JSON;
             request.RoleArn = "";
             request.RoleSessionName = "tms";
-            request.DurationSeconds = 1800;
+            request.QueryParameters.Add("DurationSeconds", "1800"); // 存在Bug需要使用手动方式注入
 
             AssumeRoleResponse response = client.GetAcsResponse(request);
 
