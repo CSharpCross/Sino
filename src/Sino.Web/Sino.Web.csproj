@@ -28,6 +28,7 @@
   <ItemGroup>
     <Folder Include="Application\Services\" />
     <Folder Include="Runtime\" />
+    <Folder Include="Validation\" />
   </ItemGroup>
 
 </Project>

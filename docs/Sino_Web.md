@@ -321,7 +321,7 @@ RuleFor(x => x.Name).NotEmpty().WithErrorCode("-8").WithMessage("名称不能为
 
 如果要启用全局异常捕获需要在`Startup`中进行配置：  
 `
-app.UseGlobalExceptionHandler(LogManager.GetCurrentClassLogger());
+app.UseGlobalExceptionHandler(loggerFactory);
 `
 
 
