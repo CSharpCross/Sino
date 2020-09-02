@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Sino.Web.Validation
@@ -38,23 +39,46 @@ namespace Sino.Web.Validation
                         }
                     }
 
-
+					foreach (ModelError err in errorsToModify)
+                    {
+						entry.Value.Errors.Clear();
+						entry.Value.ValidationState = ModelValidationState.Unvalidated;
+						requiredErrorsNotHandledByFv.Add(new KeyValuePair<ModelStateEntry, ModelError>(entry.Value,
+							new ModelError(err.ErrorMessage.Replace(ValidationBindingMetadataProvider.Prefix, string.Empty))));
+                    }
                 }
             }
 
-			// Apply any customizations made with the CustomizeValidatorAttribute
-			if (model != null)
-			{
-				CacheCustomizations(Context, model, key);
-			}
-
 			var result = base.Validate(metadata, key, model, alwaysValidateAtTopLevel);
 
-			// Re-add errors that we took out if FV didn't add a key.
-			ReApplyImplicitRequiredErrorsNotHandledByFV(requiredErrorsNotHandledByFv);
+			foreach (var pair in requiredErrorsNotHandledByFv)
+            {
+				if (pair.Key.ValidationState != ModelValidationState.Invalid)
+                {
+					pair.Key.Errors.Add(pair.Value);
+					pair.Key.ValidationState = ModelValidationState.Invalid;
+                }
+            }
 
-			// Remove duplicates. This can happen if someone has implicit child validation turned on and also adds an explicit child validator.
-			RemoveDuplicateModelstateEntries(Context);
+			foreach (var entry in Context.ModelState)
+            {
+				if (entry.Value.ValidationState == ModelValidationState.Invalid)
+                {
+					var existing = new HashSet<string>();
+
+					foreach (var err in entry.Value.Errors.ToList())
+                    {
+						if (existing.Contains(err.ErrorMessage))
+                        {
+							entry.Value.Errors.Remove(err);
+                        }
+						else
+                        {
+							existing.Add(err.ErrorMessage);
+                        }
+                    }
+                }
+            }
 
 			return result;
 		}

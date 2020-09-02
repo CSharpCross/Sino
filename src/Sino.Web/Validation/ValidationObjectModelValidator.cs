@@ -28,7 +28,7 @@ namespace Sino.Web.Validation
 		{
 			var validatorProviderToUse = _runMvcValidation ? validatorProvider : _fvProvider;
 
-			var visitor = new FluentValidationVisitor(
+			var visitor = new DefaultValidationVisitor(
 				actionContext,
 				validatorProviderToUse,
 				validatorCache,

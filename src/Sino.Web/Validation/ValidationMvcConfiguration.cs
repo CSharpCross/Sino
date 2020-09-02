@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Reflection;
 
 namespace Sino.Web.Validation
@@ -14,17 +15,17 @@ namespace Sino.Web.Validation
         /// <summary>
         /// 需要自动扫描的程序集
         /// </summary>
-        private List<Assembly> _assembliesToRegister = new List<Assembly>();
+        public List<Assembly> AssembliesToRegister { get; private set; } = new List<Assembly>();
 
         /// <summary>
         /// 过滤器，用于过滤不需要注入的对象
         /// </summary>
-        private Func<AssemblyScanner.AssemblyScanResult, bool> _typeFilter;
+        public Func<AssemblyScanner.AssemblyScanResult, bool> TypeFilter { get; private set; }
 
         /// <summary>
         /// 注入的生命周期
         /// </summary>
-        private ServiceLifetime _serviceLifetime = ServiceLifetime.Transient;
+        public ServiceLifetime ServiceLifetime { get; private set; } = ServiceLifetime.Transient;
 
         /// <summary>
         /// Fluent验证类库配置
@@ -45,6 +46,11 @@ namespace Sino.Web.Validation
         /// 是否在本验证执行后执行Mvc默认的模型验证，默认为启用
         /// </summary>
         public bool RunDefaultMvcValidation { get; set; } = true;
+
+        /// <summary>
+        /// 是否启用服务端自动校验，默认为启用
+        /// </summary>
+        public bool AutomaticValidationEnabled { get; set; } = true;
 
         /// <summary>
         /// 是否开启多语言支持
@@ -87,9 +93,9 @@ namespace Sino.Web.Validation
             ServiceLifetime lifetime = ServiceLifetime.Transient)
         {
             ValidatorFactoryType = typeof(ServiceProviderValidatorFactory);
-            _assembliesToRegister.Add(assembly);
-            _typeFilter = filter;
-            _serviceLifetime = lifetime;
+            AssembliesToRegister.Add(assembly);
+            TypeFilter = filter;
+            ServiceLifetime = lifetime;
             return this;
         }
 
@@ -97,9 +103,9 @@ namespace Sino.Web.Validation
             ServiceLifetime lifetime = ServiceLifetime.Transient)
         {
             ValidatorFactoryType = typeof(ServiceProviderValidatorFactory);
-            _assembliesToRegister.AddRange(assemblies);
-            _typeFilter = filter;
-            _serviceLifetime = lifetime;
+            AssembliesToRegister.AddRange(assemblies);
+            TypeFilter = filter;
+            ServiceLifetime = lifetime;
             return this;
         }
     }
