@@ -47,7 +47,7 @@ namespace Sino.Web.Filters
         {
             if (context.ActionDescriptor is ControllerActionDescriptor descriptor)
             {
-                var attribute = descriptor.MethodInfo.GetCustomAttributes(typeof(StandardResultFilterAttribute), true).FirstOrDefault();
+                var attribute = descriptor.MethodInfo?.GetCustomAttributes(typeof(StandardResultFilterAttribute), true)?.FirstOrDefault();
                 return attribute as StandardResultFilterAttribute;
             }
             return null;

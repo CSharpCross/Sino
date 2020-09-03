@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Routing;
 using Moq;
@@ -52,6 +53,20 @@ namespace Sino.Web.Test
             {
                 Result = contentResult
             };
+        }
+
+        public static ResultExecutingContext CreateResultExecutingContext(object result)
+        {
+            var filter = Mock.Of<IFilterMetadata>();
+
+            var actionDescription = new ControllerActionDescriptor();
+            var objectResult = new ObjectResult(result);
+
+            return new ResultExecutingContext(new ActionContext(
+                new DefaultHttpContext(),
+                new RouteData(),
+                actionDescription
+                ), new IFilterMetadata[] { filter }, objectResult, new object());
         }
     }
 }
