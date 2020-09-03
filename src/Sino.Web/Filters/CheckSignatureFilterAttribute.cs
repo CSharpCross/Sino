@@ -57,9 +57,9 @@ namespace Sino.Web.Filters
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            var attribute = GetAttribute(context);
+            var isUse = GetAttribute(context)?.Use ?? Use;
 
-            if (attribute != null && attribute.Use)
+            if (isUse)
             {
                 bool isNotPass = true;
                 var queryName = new string[] { SignatureQueryName, TimeStampQueryName, NonceQueryName };
@@ -87,9 +87,9 @@ namespace Sino.Web.Filters
                 {
                     context.Result = new ObjectResult(new BaseResponse
                     {
-                        success = false,
-                        errorCode = ErrorCode.ToString(),
-                        errorMessage = ErrorMessage
+                        Success = false,
+                        ErrorCode = ErrorCode.ToString(),
+                        ErrorMessage = ErrorMessage
                     });
                     return;
                 }

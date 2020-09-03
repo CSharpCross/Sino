@@ -20,29 +20,36 @@ namespace Sino.Web.Filters
         {
             if (context.ActionDescriptor is ControllerActionDescriptor descriptor)
             {
-                var attribute = descriptor.MethodInfo.GetCustomAttributes(typeof(StandardResultFilterAttribute), true).FirstOrDefault();
-                if (attribute != null && attribute is StandardResultFilterAttribute standardResult)
+                var use = GetAttribute(context)?.IsUse ?? IsUse;
+                if (use)
                 {
-                    if (standardResult.IsUse)
+                    var result = context.Result;
+                    if (result is EmptyResult || result is ObjectResult)
                     {
-                        var result = context.Result;
-                        if (result is EmptyResult || result is ObjectResult)
+                        context.Result = result is EmptyResult ? new ObjectResult(null) : result;
+                        var obj = context.Result as ObjectResult;
+                        if (!(obj.Value is BaseResponse))
                         {
-                            context.Result = result is EmptyResult ? new ObjectResult(null) : result;
-                            var obj = context.Result as ObjectResult;
-                            if (!(obj.Value is BaseResponse))
+                            obj.Value = new BaseResponse
                             {
-                                obj.Value = new BaseResponse
-                                {
-                                    success = true,
-                                    data = obj.Value
-                                };
-                            }
+                                Success = true,
+                                Data = obj.Value
+                            };
                         }
                     }
                 }
             }
             base.OnResultExecuting(context);
+        }
+
+        private StandardResultFilterAttribute GetAttribute(ActionContext context)
+        {
+            if (context.ActionDescriptor is ControllerActionDescriptor descriptor)
+            {
+                var attribute = descriptor.MethodInfo.GetCustomAttributes(typeof(StandardResultFilterAttribute), true).FirstOrDefault();
+                return attribute as StandardResultFilterAttribute;
+            }
+            return null;
         }
     }
 }

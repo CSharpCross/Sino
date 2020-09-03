@@ -33,46 +33,40 @@ namespace Sino.Web.Filters
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            var attribute = GetAttribute(context);
-            if (attribute != null)
+            var useInput = GetAttribute(context)?.Input ?? Input;
+            if (useInput)
             {
-                if (attribute.Input)
+                _logger.Info(new LogInfo()
                 {
-                    _logger.Info(new LogInfo()
+                    Method = context.ActionDescriptor.RouteValues["controller"],
+                    Argument = new
                     {
-                        Method = context.ActionDescriptor.RouteValues["controller"],
-                        Argument = new
-                        {
-                            RequestId = context.HttpContext.TraceIdentifier,
-                            Arguments = context.ActionArguments,
-                            Host = GetClientUserIp(context)
-                        },
-                        Description = "入参记录"
-                    });
-                }
+                        RequestId = context.HttpContext.TraceIdentifier,
+                        Arguments = context.ActionArguments,
+                        Host = GetClientUserIp(context)
+                    },
+                    Description = "入参记录"
+                });
             }
             base.OnActionExecuting(context);
         }
 
         public override void OnActionExecuted(ActionExecutedContext context)
         {
-            var attribute = GetAttribute(context);
-            if (attribute != null)
+            var useOutput = GetAttribute(context)?.Output ?? Output;
+            if (useOutput)
             {
-                if (attribute.Output)
+                _logger.Info(new LogInfo()
                 {
-                    _logger.Info(new LogInfo()
+                    Method = context.ActionDescriptor.RouteValues["controller"],
+                    Argument = new
                     {
-                        Method = context.ActionDescriptor.RouteValues["controller"],
-                        Argument = new
-                        {
-                            RequestId = context.HttpContext.TraceIdentifier,
-                            context.Result,
-                            Host = GetClientUserIp(context)
-                        },
-                        Description = "出参记录"
-                    });
-                }
+                        RequestId = context.HttpContext.TraceIdentifier,
+                        context.Result,
+                        Host = GetClientUserIp(context)
+                    },
+                    Description = "出参记录"
+                });
             }
             base.OnActionExecuted(context);
         }
