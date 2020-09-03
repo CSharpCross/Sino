@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.TestHost;
+using Sino.ViewModels;
 using Sino.Web.Validation;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -35,7 +36,7 @@ namespace Sino.IntegrationTest
         {
             try
             {
-                var result = await _client.GetErrors("InjectsExplicitChildValidator", new Dictionary<string, string>());
+                var result = await _client.GetBody<BaseResponse>("InjectsExplicitChildValidator", new Dictionary<string, string>());
             }
             catch (SinoException ex)
             {
@@ -51,7 +52,7 @@ namespace Sino.IntegrationTest
             {
                 var formData = new Dictionary<string, string>();
                 formData.Add("Children[0].Name", null);
-                var result = await _client.GetErrors("InjectsExplicitChildValidatorCollection", formData);
+                var result = await _client.GetBody<BaseResponse>("InjectsExplicitChildValidatorCollection", formData);
             }
             catch (SinoException ex)
             {

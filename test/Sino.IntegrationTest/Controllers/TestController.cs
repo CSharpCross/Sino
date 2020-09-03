@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sino.IntegrationTest.Fake;
+using Sino.Web.Filters;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,6 +18,23 @@ namespace Sino.IntegrationTest.Controllers
 		{
 			return TestResult();
 		}
+
+		public ParentModel StandardResultFilterWithNormal()
+        {
+			var model = new ParentModel();
+            model.Child = new ChildModel() { Name = "test" };
+
+			return model;
+        }
+
+		[StandardResultFilter(IsUse = false)]
+		public ParentModel StandardResultFilterWithNoUse()
+		{
+			var model = new ParentModel();
+			model.Child = new ChildModel() { Name = "nouse" };
+
+			return model;
+        }
 
 		private ActionResult TestResult()
 		{

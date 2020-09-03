@@ -32,6 +32,7 @@ namespace Sino.Web.Filters
                         {
                             obj.Value = new BaseResponse
                             {
+                                ErrorCode = "0",
                                 Success = true,
                                 Data = obj.Value
                             };

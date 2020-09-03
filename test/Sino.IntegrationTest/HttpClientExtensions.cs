@@ -17,10 +17,10 @@ namespace Sino.IntegrationTest
             return await response.Content.ReadAsStringAsync();
         }
 
-        public static async Task<BaseResponse> GetErrors(this HttpClient client, string action, Dictionary<string, string> form)
+        public static async Task<T> GetBody<T>(this HttpClient client, string action, Dictionary<string, string> form)
         {
             var response = await client.PostResponse($"/Test/{action}", form);
-            return JsonConvert.DeserializeObject<BaseResponse>(response);
+            return JsonConvert.DeserializeObject<T>(response);
         }
     }
 }
