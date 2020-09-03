@@ -49,17 +49,17 @@ namespace Microsoft.AspNetCore.Builder
 
 			BaseResponse response = new BaseResponse
 			{
-				success = false,
-				errorCode = DEFAULT_ERROR_CODE,
-				errorMessage = DEFAULT_ERROR_MESSAGE
+				Success = false,
+				ErrorCode = DEFAULT_ERROR_CODE,
+				ErrorMessage = DEFAULT_ERROR_MESSAGE
 			};
 
 			var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerFeature>();
 			if (exceptionHandlerPathFeature?.Error is SinoException)
 			{
 				var sex = exceptionHandlerPathFeature.Error as SinoException;
-				response.errorCode = sex.Code.ToString();
-				response.errorMessage = sex.Message;
+				response.ErrorCode = sex.Code.ToString();
+				response.ErrorMessage = sex.Message;
 			}
 
 			if (exceptionHandlerPathFeature?.Error != null)
