@@ -12,9 +12,21 @@ namespace Sino.Web.Filters
     /// </summary>
     public class ActionLogFilterAttribute : ActionFilterAttribute
     {
-        public static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogger _logger;
 
         public const string ALIYUN_SLB_CLIENT_IP_HEADER_NAME = "X-Forwarded-For";
+
+        public ActionLogFilterAttribute()
+            : base() 
+        {
+            _logger = LogManager.GetCurrentClassLogger();
+        }
+
+        public ActionLogFilterAttribute(ILogger logger)
+            : base() 
+        {
+            _logger = logger;
+        }
 
         /// <summary>
         /// 是否记录输入日志
