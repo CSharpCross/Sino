@@ -140,9 +140,10 @@ public IActionResult Get()
 作为全局过滤器进行使用：  
 
 ```csharp
+services.AddStandardResultFilter();
 services.AddMvc(x =>
 {
-   x.Filters.AddStandardResultFilter(services);
+   x.Filters.UseStandardResultFilter(services);
 });
 ```  
 
@@ -176,9 +177,10 @@ public IActionResult Get()
 如果需要全局都能够支持，按照之前的方式，我们需要在`Startup`中使用如下代码：  
 
 ```csharp
+services.AddActionLogFilter();
 services.AddMvc(x =>
 {
-   x.Filters.AddActionLogFilter(services);
+   x.Filters.UseActionLogFilter();
 });
 ```
 
@@ -210,9 +212,10 @@ public IActionResult Get()
 对应全局使用方式如下：  
 
 ```csharp
+services.AddCheckSignatureFilter("abc");
 services.AddMvc(x =>
 {
-   x.Filters.AddCheckSignatureFilter(services, "abc");
+   x.Filters.UseCheckSignatureFilter();
 });
 ```
 
