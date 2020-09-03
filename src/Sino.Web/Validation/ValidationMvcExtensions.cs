@@ -2,14 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Sino.Web.Validation;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
-namespace Sino.Web.Validation
+namespace Microsoft.Extensions.DependencyInjection
 {
     public static class ValidationMvcExtensions
     {
