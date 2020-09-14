@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Collections.Concurrent;
 
-namespace Sino.Extensions.AutoIndex
+namespace Sino.Extensions.AutoIndex.Generator
 {
     /// <summary>
     /// Id生成器抽象工厂

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Sino.Extensions.AutoIndex
+namespace Sino.Extensions.AutoIndex.Generator
 {
     /// <summary>
     /// Id生成器工厂接口
