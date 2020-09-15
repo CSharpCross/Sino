@@ -29,9 +29,11 @@ namespace Microsoft.Extensions.DependencyInjection
             if (servers == null || servers.Length <= 0)
                 throw new ArgumentNullException(nameof(servers));
 
-            var cfg = new TinyIdClientConfiguration();
-            cfg.Token = token;
-            cfg.Servers = servers.ToList();
+            var cfg = new TinyIdClientConfiguration
+            {
+                Token = token,
+                Servers = servers.ToList()
+            };
 
             services.AddSingleton(cfg);
             services.AddSingleton<ITinyIdClient, TinyIdClient>();

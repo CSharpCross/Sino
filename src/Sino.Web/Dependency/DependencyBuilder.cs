@@ -11,6 +11,7 @@ using Sino.Web.Dependency.Resolvers;
 using Sino.Dependency;
 using System.Reflection;
 using Sino.Web.Dependency.Scope;
+using Sino.Web.Module;
 
 namespace Sino.Web.Dependency
 {
@@ -104,6 +105,20 @@ namespace Sino.Web.Dependency
                 }
             }
 
+            DependencyAutoRegister();
+
+            var services = _container.Resolve<IServiceProvider>();
+
+            ModuleAutoRegister(services);
+
+            return services;
+        }
+
+        /// <summary>
+        /// 基础依赖自动注入
+        /// </summary>
+        private void DependencyAutoRegister()
+        {
             if (_types.Count > 0)
             {
                 _container.Register(Classes.From(_types)
@@ -120,8 +135,18 @@ namespace Sino.Web.Dependency
                     .WithService.DefaultInterfaces()
                     .LifestyleTransient());
             }
+        }
 
-            return _container.Resolve<IServiceProvider>();
+        /// <summary>
+        /// 模块依赖注入
+        /// </summary>
+        private void ModuleAutoRegister(IServiceProvider services)
+        {
+            var modules = services.GetServices<IModuleRegister>();
+            foreach(var module in modules)
+            {
+                module.ConfigureServices(_container, _types);
+            }
         }
     }
 }

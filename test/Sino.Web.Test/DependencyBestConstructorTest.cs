@@ -8,7 +8,7 @@ namespace Sino.Web.Test
 {
     public class DependencyBestConstructorTest
     {
-        private IServiceCollection _serviceCollection;
+        private readonly IServiceCollection _serviceCollection;
 
         public DependencyBestConstructorTest()
         {
@@ -90,29 +90,17 @@ namespace Sino.Web.Test
     {
         public ServiceUser(A a)
 		{
-			if (a == null)
-			{
-				throw new ArgumentNullException();
-			}
-			AComponent = a;
+            AComponent = a ?? throw new ArgumentNullException();
 		}
 
 		public ServiceUser(A a, B b) : this(a)
 		{
-			if (b == null)
-			{
-				throw new ArgumentNullException();
-			}
-			BComponent = b;
+            BComponent = b ?? throw new ArgumentNullException();
 		}
 
 		public ServiceUser(A a, B b, C c) : this(a, b)
 		{
-			if (c == null)
-			{
-				throw new ArgumentNullException();
-			}
-			CComponent = c;
+            CComponent = c ?? throw new ArgumentNullException();
 		}
 
         public A AComponent { get; }

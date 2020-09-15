@@ -10,7 +10,7 @@ namespace Sino.Web.Test
 {
     public class DependencyAopTest
     {
-        private IServiceCollection _serviceCollection;
+        private readonly IServiceCollection _serviceCollection;
 
         public DependencyAopTest()
         {

@@ -341,10 +341,13 @@ services.AddJson();
 为了避免在后期大量的服务需要手动注入，利用`Scrutor`类库实现了自动根据名字进行IOC注入，默认规则为根据类名前加`I`的方式自动进行
 注入，当然还有继承了接口`ISingletonDependency`和`ITransientDependency`才可以被自动注入，并按照规定的方式进行，以下就是如何使用的方式：
 ```
-public void ConfigureServices(IServiceCollection services)
+public IServiceProvider ConfigureServices(IServiceCollection services)
 {
     services.AddMvc();
-    services.AutoDependency(typeof(IAInterface),typeof(IBInterface));
+    var builder = services.CreateContainer().AddAssembly(typeof(IAInterface),typeof(IBInterface));
+
+    return builder.Build();
+}
 ```
 
 更详细的使用方式请参考[该文档](https://github.com/CSharpCross/Sino/blob/dev/docs/Sino_Web_Dependency.md)

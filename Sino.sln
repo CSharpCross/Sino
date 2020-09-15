@@ -17,6 +17,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{93BB9B41-565F-491E-A96B-84C9014F3244}"
 	ProjectSection(SolutionItems) = preProject
 		docs\Sino_AutoIndex.md = docs\Sino_AutoIndex.md
+		docs\Sino_EventBus.md = docs\Sino_EventBus.md
 		docs\Sino_Web.md = docs\Sino_Web.md
 		docs\Sino_Web_Dependency.md = docs\Sino_Web_Dependency.md
 	EndProjectSection
