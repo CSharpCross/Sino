@@ -2,26 +2,42 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Sino.Extensions.AutoIndex
 {
     public class TinyIdClient : ITinyIdClient
     {
-        private IIdGeneratorFactory _idGeneratorFactory;
+        private readonly IIdGeneratorFactory _idGeneratorFactory;
 
         public TinyIdClient(IIdGeneratorFactory factory)
         {
             _idGeneratorFactory = factory;
         }
 
-        public long NextId(string bizType)
+        public async Task<long> NextId(string bizType)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(bizType))
+                throw new ArgumentNullException(nameof(bizType));
+
+            var idGenerator = _idGeneratorFactory.GetIdGenerator(bizType);
+            return await idGenerator.NextId();
         }
 
-        public IList<long> NextId(string bizType, int batchSize)
+        public async Task<IList<long>> NextId(string bizType, int batchSize)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(bizType))
+                throw new ArgumentNullException(nameof(bizType));
+
+            if (batchSize <= 0)
+            {
+                var ids = new List<long>();
+                long id = await NextId(bizType);
+                ids.Add(id);
+                return ids;
+            }
+            var idGenerator = _idGeneratorFactory.GetIdGenerator(bizType);
+            return await idGenerator.NextId(batchSize);
         }
     }
 }

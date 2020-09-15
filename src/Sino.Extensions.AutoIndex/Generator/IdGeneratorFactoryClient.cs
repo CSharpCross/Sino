@@ -9,9 +9,9 @@ namespace Sino.Extensions.AutoIndex.Generator
 {
     public class IdGeneratorFactoryClient : AbstractIdGeneratorFactory
     {
-        private TinyIdClientConfiguration _tinyIdClientConfiguration;
-        private IHttpClientFactory _httpClientFactory;
-        private ILoggerFactory _loggerFactory;
+        private readonly TinyIdClientConfiguration _tinyIdClientConfiguration;
+        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly ILoggerFactory _loggerFactory;
 
         private IList<string> _servers;
 
