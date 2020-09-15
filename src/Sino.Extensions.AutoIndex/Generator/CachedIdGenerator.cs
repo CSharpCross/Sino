@@ -1,6 +1,7 @@
 ﻿using Sino.Extensions.AutoIndex.Entity;
 using Sino.Extensions.AutoIndex.Service;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Sino.Extensions.AutoIndex.Generator
@@ -55,7 +56,7 @@ namespace Sino.Extensions.AutoIndex.Generator
                     if(_next == null && !_isLoadingNext)
                     {
                         _isLoadingNext = true;
-                        Task.Run(async () =>
+                        ThreadPool.QueueUserWorkItem(async (x) =>
                         {
                             try
                             {
@@ -65,7 +66,7 @@ namespace Sino.Extensions.AutoIndex.Generator
                             {
                                 _isLoadingNext = false;
                             }
-                        }).Start();
+                        });
                     }
                 }
             }

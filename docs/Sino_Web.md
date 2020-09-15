@@ -328,7 +328,8 @@ app.UseGlobalExceptionHandler(loggerFactory);
 `
 
 
-## 其他
+## 其他  
+
 ### JSON序列化
 为了避免直接使用静态类，该类库中提供了`IJsonConvertProvider`接口将`JSON.NET`进行了封装，对于程序中需要使用到的地方请采用
 该接口，该接口已经纳入IOC中，只需要在StartUp中进行添加即可：  
