@@ -2,6 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>y-z-f</Authors>
+    <Company>sino</Company>
+    <Description>基于滴滴TinyID的客户端</Description>
+    <PackageProjectUrl>https://github.com/didi/tinyid</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/didi/tinyid.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>id generator;didi;tinyid</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>

@@ -11,6 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sino.Web", "src\Sino.Web\Si
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".global", ".global", "{237BDD08-56EC-4365-82E2-A553F674C16D}"
 	ProjectSection(SolutionItems) = preProject
+		Package.cmd = Package.cmd
 		ReadMe.md = ReadMe.md
 	EndProjectSection
 EndProject
@@ -36,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sino.Extensions.AutoIndex",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sino.AutoIndexTest", "src\Sino.AutoIndexTest\Sino.AutoIndexTest.csproj", "{097BA66B-1777-42E2-A333-3DFB501E0B5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BenchmarkTest", "test\BenchmarkTest\BenchmarkTest.csproj", "{5D05BC9C-431B-48B5-AF19-F8B3D7ADCB72}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BenchmarkTest", "test\BenchmarkTest\BenchmarkTest.csproj", "{5D05BC9C-431B-48B5-AF19-F8B3D7ADCB72}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
