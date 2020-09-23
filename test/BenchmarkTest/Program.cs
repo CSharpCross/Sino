@@ -7,7 +7,7 @@ namespace BenchmarkTest
     {
         static void Main(string[] args)
         {
-            var summary = BenchmarkRunner.Run<AutoIndexTest>();
+            var summary = BenchmarkRunner.Run<RedisTest>();
         }
     }
 }
