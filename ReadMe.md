@@ -15,5 +15,5 @@
 
 提供便携快速的方式使业务快速利用事件总线，进行解耦。  
 
-
+4. [Sino.Extensions.Redis文档](https://github.com/CSharpCross/Sino/blob/dev/docs/Sino_Redis.md)  
 
