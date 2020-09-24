@@ -1,12 +1,14 @@
 ﻿using Microsoft.Extensions.Options;
 using StackExchange.Redis;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Sino.Extensions.Redis
 {
+    /// <summary>
+    /// 缓存实现
+    /// </summary>
     public class RedisCache : IRedisCache
     {
         private readonly string _instance;
@@ -44,24 +46,30 @@ namespace Sino.Extensions.Redis
             _database = _connectionMultiplexer.GetDatabase();
         }
 
+        private string GetKeyString(string key)
+        {
+            var newKey = _instance + key;
+            return newKey;
+        }
+
         public long Append(string key, string value)
         {
-            return _database.StringAppend(key, value);
+            return _database.StringAppend(GetKeyString(key), value);
         }
 
         public Task<long> AppendAsync(string key, string value)
         {
-            return _database.StringAppendAsync(key, value);
+            return _database.StringAppendAsync(GetKeyString(key), value);
         }
 
         public long BitCount(string key, long start = 0, long end = -1)
         {
-            return _database.StringBitCount(key, start, end);
+            return _database.StringBitCount(GetKeyString(key), start, end);
         }
 
         public Task<long> BitCountAsync(string key, long start = 0, long end = -1)
         {
-            return _database.StringBitCountAsync(key, start, end);
+            return _database.StringBitCountAsync(GetKeyString(key), start, end);
         }
 
         public Tuple<string, string> BLPop(int timeout, params string[] keys)
@@ -96,122 +104,122 @@ namespace Sino.Extensions.Redis
 
         public long Decr(string key)
         {
-            return _database.StringDecrement(key);
+            return _database.StringDecrement(GetKeyString(key));
         }
 
         public Task<long> DecrAsync(string key)
         {
-            return _database.StringDecrementAsync(key);
+            return _database.StringDecrementAsync(GetKeyString(key));
         }
 
         public long DecrBy(string key, long decrement)
         {
-            return _database.StringDecrement(key, decrement);
+            return _database.StringDecrement(GetKeyString(key), decrement);
         }
 
         public Task<long> DecrByAsync(string key, long decrement)
         {
-            return _database.StringDecrementAsync(key, decrement);
+            return _database.StringDecrementAsync(GetKeyString(key), decrement);
         }
 
         public bool Exists(string key)
         {
-            return _database.KeyExists(key);
+            return _database.KeyExists(GetKeyString(key));
         }
 
         public Task<bool> ExistsAsync(string key)
         {
-            return _database.KeyExistsAsync(key);
+            return _database.KeyExistsAsync(GetKeyString(key));
         }
 
         public bool Expire(string key, int seconds)
         {
-            return _database.KeyExpire(key, TimeSpan.FromSeconds(seconds));
+            return _database.KeyExpire(GetKeyString(key), TimeSpan.FromSeconds(seconds));
         }
 
         public Task<bool> ExpireAsync(string key, int seconds)
         {
-            return _database.KeyExpireAsync(key, TimeSpan.FromSeconds(seconds));
+            return _database.KeyExpireAsync(GetKeyString(key), TimeSpan.FromSeconds(seconds));
         }
 
         public string Get(string key)
         {
-            throw new NotImplementedException();
+            return _database.StringGet(GetKeyString(key));
         }
 
-        public Task<string> GetAsync(string key)
+        public async Task<string> GetAsync(string key)
         {
-            throw new NotImplementedException();
+            return await _database.StringGetAsync(GetKeyString(key)).ConfigureAwait(false);
         }
 
         public bool GetBit(string key, uint offset)
         {
-            throw new NotImplementedException();
+            return _database.StringGetBit(GetKeyString(key), offset);
         }
 
         public Task<bool> GetBitAsync(string key, uint offset)
         {
-            throw new NotImplementedException();
+            return _database.StringGetBitAsync(GetKeyString(key), offset);
         }
 
         public string GetRange(string key, long start, long end)
         {
-            throw new NotImplementedException();
+            return _database.StringGetRange(GetKeyString(key), start, end);
         }
 
-        public Task<string> GetRangeAsync(string key, long start, long end)
+        public async Task<string> GetRangeAsync(string key, long start, long end)
         {
-            throw new NotImplementedException();
+            return await _database.StringGetRangeAsync(GetKeyString(key), start, end).ConfigureAwait(false);
         }
 
         public long HDel(string key, params string[] fields)
         {
-            throw new NotImplementedException();
+            return _database.HashDelete(GetKeyString(key), fields.Select(x => (RedisValue)x).ToArray());
         }
 
         public Task<long> HDelAsync(string key, params string[] fields)
         {
-            throw new NotImplementedException();
+            return _database.HashDeleteAsync(GetKeyString(key), fields.Select(x => (RedisValue)x).ToArray());
         }
 
         public bool HExists(string key, string field)
         {
-            throw new NotImplementedException();
+            return _database.HashExists(GetKeyString(key), field);
         }
 
         public Task<bool> HExistsAsync(string key, string field)
         {
-            throw new NotImplementedException();
+            return _database.HashExistsAsync(GetKeyString(key), field);
         }
 
         public string HGet(string key, string field)
         {
-            throw new NotImplementedException();
+            return _database.HashGet(GetKeyString(key), field);
         }
 
-        public Task<string> HGetAsync(string key, string field)
+        public async Task<string> HGetAsync(string key, string field)
         {
-            throw new NotImplementedException();
+            return await _database.HashGetAsync(GetKeyString(key), field).ConfigureAwait(false);
         }
 
         public long HLen(string key)
         {
-            throw new NotImplementedException();
+            return _database.HashLength(GetKeyString(key));
         }
 
         public Task<long> HLenAsync(string key)
         {
-            throw new NotImplementedException();
+            return _database.HashLengthAsync(GetKeyString(key));
         }
 
         public bool HSet(string key, string field, string value)
         {
-            throw new NotImplementedException();
+            return _database.HashSet(GetKeyString(key), field, value);
         }
 
         public Task<bool> HSetAsync(string key, string field, string value)
         {
-            throw new NotImplementedException();
+            return _database.HashSetAsync(GetKeyString(key), field, value);
         }
 
         public bool HSetNx(string key, string field, string value)
@@ -226,62 +234,62 @@ namespace Sino.Extensions.Redis
 
         public long Incr(string key)
         {
-            throw new NotImplementedException();
+            return _database.StringIncrement(GetKeyString(key));
         }
 
         public Task<long> IncrAsync(string key)
         {
-            throw new NotImplementedException();
+            return _database.StringIncrementAsync(GetKeyString(key));
         }
 
         public long IncrBy(string key, long increment)
         {
-            throw new NotImplementedException();
+            return _database.StringIncrement(GetKeyString(key), increment);
         }
 
         public Task<long> IncrByAsync(string key, long increment)
         {
-            throw new NotImplementedException();
+            return _database.StringIncrementAsync(GetKeyString(key), increment);
         }
 
         public string LIndex(string key, long index)
         {
-            throw new NotImplementedException();
+            return _database.ListGetByIndex(GetKeyString(key), index);
         }
 
-        public Task<string> LIndexAsync(string key, long index)
+        public async Task<string> LIndexAsync(string key, long index)
         {
-            throw new NotImplementedException();
+            return await _database.ListGetByIndexAsync(GetKeyString(key), index).ConfigureAwait(false);
         }
 
         public long LLen(string key)
         {
-            throw new NotImplementedException();
+            return _database.ListLength(GetKeyString(key));
         }
 
         public Task<long> LLenAsync(string key)
         {
-            throw new NotImplementedException();
+            return _database.ListLengthAsync(GetKeyString(key));
         }
 
         public string LPop(string key)
         {
-            throw new NotImplementedException();
+            return _database.ListLeftPop(GetKeyString(key));
         }
 
-        public Task<string> LPopAsync(string key)
+        public async Task<string> LPopAsync(string key)
         {
-            throw new NotImplementedException();
+            return await _database.ListLeftPopAsync(GetKeyString(key)).ConfigureAwait(false);
         }
 
         public long LPush(string key, params string[] values)
         {
-            throw new NotImplementedException();
+            return _database.ListLeftPush(GetKeyString(key), values.Select(x => (RedisValue)x).ToArray());
         }
 
         public Task<long> LPushAsync(string key, params string[] values)
         {
-            throw new NotImplementedException();
+            return _database.ListLeftPushAsync(GetKeyString(key), values.Select(x => (RedisValue)x).ToArray());
         }
 
         public long LPushX(string key, string value)
@@ -296,72 +304,72 @@ namespace Sino.Extensions.Redis
 
         public long LRem(string key, long count, string value)
         {
-            throw new NotImplementedException();
+            return _database.ListRemove(GetKeyString(key), value, count);
         }
 
         public Task<long> LRemAsync(string key, long count, string value)
         {
-            throw new NotImplementedException();
+            return _database.ListRemoveAsync(GetKeyString(key), value, count);
         }
 
         public bool PExpire(string key, long milliseconds)
         {
-            throw new NotImplementedException();
+            return _database.KeyExpire(GetKeyString(key), TimeSpan.FromMilliseconds(milliseconds));
         }
 
         public Task<bool> PExpireAsync(string key, long milliseconds)
         {
-            throw new NotImplementedException();
+            return _database.KeyExpireAsync(GetKeyString(key), TimeSpan.FromMilliseconds(milliseconds));
         }
 
         public void Refresh(string key, int timeout)
         {
-            throw new NotImplementedException();
+            _database.KeyExpire(GetKeyString(key), TimeSpan.FromSeconds(timeout));
         }
 
-        public Task RefreshAsync(string key, int timeout)
+        public async Task RefreshAsync(string key, int timeout)
         {
-            throw new NotImplementedException();
+            await _database.KeyExpireAsync(GetKeyString(key), TimeSpan.FromSeconds(timeout)).ConfigureAwait(false);
         }
 
         public void Remove(string key)
         {
-            throw new NotImplementedException();
+            _database.KeyDelete(GetKeyString(key));
         }
 
-        public Task RemoveAsync(string key)
+        public async Task RemoveAsync(string key)
         {
-            throw new NotImplementedException();
+            await _database.KeyDeleteAsync(GetKeyString(key)).ConfigureAwait(false);
         }
 
         public string RPop(string key)
         {
-            throw new NotImplementedException();
+            return _database.ListRightPop(GetKeyString(key));
         }
 
-        public Task<string> RPopAsync(string key)
+        public async Task<string> RPopAsync(string key)
         {
-            throw new NotImplementedException();
+            return await _database.ListRightPopAsync(GetKeyString(key)).ConfigureAwait(false);
         }
 
         public string RPopLPush(string source, string destination)
         {
-            throw new NotImplementedException();
+            return _database.ListRightPopLeftPush(source, destination);
         }
 
-        public Task<string> RPopLPushAsync(string source, string destination)
+        public async Task<string> RPopLPushAsync(string source, string destination)
         {
-            throw new NotImplementedException();
+            return await _database.ListRightPopLeftPushAsync(source, destination).ConfigureAwait(false);
         }
 
         public long RPush(string key, params string[] values)
         {
-            throw new NotImplementedException();
+            return _database.ListRightPush(GetKeyString(key), values.Select(x => (RedisValue)x).ToArray());
         }
 
         public Task<long> RPushAsync(string key, params string[] values)
         {
-            throw new NotImplementedException();
+            return _database.ListRightPushAsync(GetKeyString(key), values.Select(x => (RedisValue)x).ToArray());
         }
 
         public long RPushX(string key, params string[] values)
@@ -376,42 +384,56 @@ namespace Sino.Extensions.Redis
 
         public void Set(string key, string value, int? timeout = null)
         {
-            throw new NotImplementedException();
+            if (timeout == null)
+            {
+                _database.StringSet(GetKeyString(key), value);
+            }
+            else
+            {
+                _database.StringSet(GetKeyString(key), value, TimeSpan.FromSeconds(timeout.Value));
+            }
         }
 
-        public Task SetAsync(string key, string value, int? timeout = null)
+        public async Task SetAsync(string key, string value, int? timeout = null)
         {
-            throw new NotImplementedException();
+            if (timeout == null)
+            {
+                await _database.StringSetAsync(GetKeyString(key), value).ConfigureAwait(false);
+            }
+            else
+            {
+                await _database.StringSetAsync(GetKeyString(key), value, TimeSpan.FromSeconds(timeout.Value)).ConfigureAwait(false);
+            }
         }
 
         public bool SetBit(string key, uint offset, bool value)
         {
-            throw new NotImplementedException();
+            return _database.StringSetBit(GetKeyString(key), offset, value);
         }
 
         public Task<bool> SetBitAsync(string key, uint offset, bool value)
         {
-            throw new NotImplementedException();
+            return _database.StringSetBitAsync(GetKeyString(key), offset, value);
         }
 
         public bool SetNx(string key, string value)
         {
-            throw new NotImplementedException();
+            return _database.StringSet(GetKeyString(key), value, when: When.NotExists);
         }
 
         public Task<bool> SetNxAsync(string key, string value)
         {
-            throw new NotImplementedException();
+            return _database.StringSetAsync(GetKeyString(key), value, when: When.NotExists);
         }
 
         public long StrLen(string key)
         {
-            throw new NotImplementedException();
+            return _database.StringLength(GetKeyString(key));
         }
 
         public Task<long> StrLenAsync(string key)
         {
-            throw new NotImplementedException();
+            return _database.StringLengthAsync(GetKeyString(key));
         }
     }
 }
