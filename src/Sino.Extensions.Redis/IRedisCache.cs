@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StackExchange.Redis;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -89,12 +90,12 @@ namespace Sino.Extensions.Redis
         /// <summary>
         /// 仅当Key不存在则设置其值
         /// </summary>
-        bool SetNx(string key, string value);
+        bool SetNx(string key, string value, TimeSpan? expiry = null);
 
         /// <summary>
         /// 仅当Key不存在则设置其值
         /// </summary>
-        Task<bool> SetNxAsync(string key, string value);
+        Task<bool> SetNxAsync(string key, string value, TimeSpan? expiry = null);
 
         /// <summary>
         /// 将value追加到key值后，不存在则等同set
@@ -407,5 +408,7 @@ namespace Sino.Extensions.Redis
         /// 则从表尾向表头搜索，count为0则移除所有。
         /// </summary>
         Task<long> LRemAsync(string key, long count, string value);
+
+        IDatabase GetDatabase();
     }
 }

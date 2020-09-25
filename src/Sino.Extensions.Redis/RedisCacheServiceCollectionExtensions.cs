@@ -29,5 +29,20 @@ namespace Microsoft.Extensions.DependencyInjection
 
             return services;
         }
+
+        /// <summary>
+        /// 增加基于Redis的分布式锁
+        /// </summary>
+        public static IServiceCollection AddRedisLock(this IServiceCollection services)
+        {
+            if (services == null)
+            {
+                throw new ArgumentNullException(nameof(services));
+            }
+
+            services.Add(ServiceDescriptor.Singleton<IDistributedLockProvider, DistributedLockProvider>());
+
+            return services;
+        }
     }
 }

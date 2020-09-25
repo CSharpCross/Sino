@@ -25,11 +25,6 @@ namespace Sino.Extensions.Redis.Internal
         LockStatus Status { get; }
 
         /// <summary>
-        /// 记录关于锁各类状态计数
-        /// </summary>
-        LockInstanceSummary InstanceSummary { get; }
-
-        /// <summary>
         /// 锁被延长有效时间的次数
         /// </summary>
         int ExtendCount { get; }

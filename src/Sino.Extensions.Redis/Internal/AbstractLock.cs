@@ -10,8 +10,6 @@
 
         public LockStatus Status { get; protected set; }
 
-        public LockInstanceSummary InstanceSummary { get; protected set; }
-
         public int ExtendCount { get; protected set; }
 
         public abstract void Dispose();

@@ -21,22 +21,40 @@ namespace Sino.Extensions.Redis
 
         public ILock CreateLock(string resource, TimeSpan expiryTime)
         {
-            throw new NotImplementedException();
+            return RedisLock.Create(_loggerFactory.CreateLogger<RedisLock>(),
+                _redisCache,
+                resource,
+                expiryTime);
         }
 
         public ILock CreateLock(string resource, TimeSpan expiryTime, TimeSpan waitTime, TimeSpan retryTime, CancellationToken? cancellationToken = null)
         {
-            throw new NotImplementedException();
+            return RedisLock.Create(_loggerFactory.CreateLogger<RedisLock>(),
+                _redisCache,
+                resource,
+                expiryTime,
+                waitTime,
+                retryTime,
+                cancellationToken);
         }
 
-        public Task<ILock> CreateLockAsync(string resource, TimeSpan expiryTime)
+        public async Task<ILock> CreateLockAsync(string resource, TimeSpan expiryTime)
         {
-            throw new NotImplementedException();
+            return await RedisLock.CreateAsync(_loggerFactory.CreateLogger<RedisLock>(),
+                _redisCache,
+                resource,
+                expiryTime).ConfigureAwait(false);
         }
 
-        public Task<ILock> CreateLockAsync(string resource, TimeSpan expiryTime, TimeSpan waitTime, TimeSpan retryTime, CancellationToken? cancellationToken = null)
+        public async Task<ILock> CreateLockAsync(string resource, TimeSpan expiryTime, TimeSpan waitTime, TimeSpan retryTime, CancellationToken? cancellationToken = null)
         {
-            throw new NotImplementedException();
+            return await RedisLock.CreateAsync(_loggerFactory.CreateLogger<RedisLock>(),
+                _redisCache,
+                resource,
+                expiryTime,
+                waitTime,
+                retryTime,
+                cancellationToken).ConfigureAwait(false);
         }
     }
 }

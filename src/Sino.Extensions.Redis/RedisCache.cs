@@ -416,14 +416,14 @@ namespace Sino.Extensions.Redis
             return _database.StringSetBitAsync(GetKeyString(key), offset, value);
         }
 
-        public bool SetNx(string key, string value)
+        public bool SetNx(string key, string value, TimeSpan? expiry = null)
         {
-            return _database.StringSet(GetKeyString(key), value, when: When.NotExists);
+            return _database.StringSet(GetKeyString(key), value, expiry: expiry, when: When.NotExists);
         }
 
-        public Task<bool> SetNxAsync(string key, string value)
+        public Task<bool> SetNxAsync(string key, string value, TimeSpan? expiry = null)
         {
-            return _database.StringSetAsync(GetKeyString(key), value, when: When.NotExists);
+            return _database.StringSetAsync(GetKeyString(key), value, expiry: expiry, when: When.NotExists);
         }
 
         public long StrLen(string key)
@@ -434,6 +434,11 @@ namespace Sino.Extensions.Redis
         public Task<long> StrLenAsync(string key)
         {
             return _database.StringLengthAsync(GetKeyString(key));
+        }
+
+        public IDatabase GetDatabase()
+        {
+            return _database;
         }
     }
 }

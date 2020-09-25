@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Sino.Extensions.Redis.Internal;
 using Sino.Extensions.Redis.Util;
+using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -107,29 +108,317 @@ namespace Sino.Extensions.Redis
 
                 while(!IsAcquired && stopwatch.Elapsed <= _waitTime.Value)
                 {
-                    (Status, InstanceSummary) = Acquire();
+                    Status = Acquire();
                 }
 
                 if (!IsAcquired)
                 {
-                    
+                    Task.Delay(_retryTime.Value, _cancellationToken).Wait(_cancellationToken);
                 }
+            }
+            else
+            {
+                Status = Acquire();
+            }
+            _logger.LogInformation($"Lock status: {Status}, {Resource} ({LockId})");
+
+            if (IsAcquired)
+            {
+                StartAutoExtendTimer();
             }
         }
 
         private async Task StartAsync()
         {
+            if (_waitTime.HasValue && _retryTime.HasValue && _waitTime.Value.TotalMilliseconds > 0 && _retryTime.Value.TotalMilliseconds > 0)
+            {
+                var stopwatch = Stopwatch.StartNew();
 
+                while (!IsAcquired && stopwatch.Elapsed <= _waitTime.Value)
+                {
+                    Status = await AcquireAsync().ConfigureAwait(false);
+                }
+
+                if (!IsAcquired)
+                {
+                    Task.Delay(_retryTime.Value, _cancellationToken).Wait(_cancellationToken);
+                }
+            }
+            else
+            {
+                Status = await AcquireAsync().ConfigureAwait(false);
+            }
+            _logger.LogInformation($"Lock status: {Status}, {Resource} ({LockId})");
+
+            if (IsAcquired)
+            {
+                StartAutoExtendTimer();
+            }
         }
 
-        private (LockStatus, LockInstanceSummary) Acquire()
+        private LockStatus Acquire()
         {
+            LockInstanceResult lockResult = LockInstanceResult.Error;
 
+            for (var i = 0; i < _quorumRetryCount; i++)
+            {
+                _cancellationToken.ThrowIfCancellationRequested();
+
+                var iteratio = i + 1;
+                _logger.LogDebug($"Lock attempt {iteratio}/{_quorumRetryCount}: {Resource} ({LockId}), expiry: {_expiryTime}");
+
+                var stopwatch = Stopwatch.StartNew();
+                lockResult = Lock();
+
+                var validityTicks = GetRemainingValidityTicks(stopwatch);
+
+                _logger.LogDebug($"Acquired locks for {Resource} ({LockId}), validityTicks: {validityTicks}");
+
+                if (lockResult == LockInstanceResult.Success && validityTicks > 0)
+                {
+                    return LockStatus.Acquired;
+                }
+
+                UnLock();
+
+                if (i < _quorumRetryCount - 1)
+                {
+                    var sleepMs = ThreadSafeRandom.Next(_quorumRetryDelayMs);
+                    _logger.LogDebug($"Sleeping {sleepMs}ms");
+
+                    Task.Delay(sleepMs).Wait(_cancellationToken);
+                }
+            }
+
+            var status = GetFailedLockStatus(lockResult);
+            return status;
+        }
+
+        private async Task<LockStatus> AcquireAsync()
+        {
+            LockInstanceResult lockResult = LockInstanceResult.Error;
+
+            for (var i = 0; i < _quorumRetryCount; i++)
+            {
+                _cancellationToken.ThrowIfCancellationRequested();
+
+                var iteratio = i + 1;
+                _logger.LogDebug($"Lock attempt {iteratio}/{_quorumRetryCount}: {Resource} ({LockId}), expiry: {_expiryTime}");
+
+                var stopwatch = Stopwatch.StartNew();
+                lockResult = await LockAsync().ConfigureAwait(false);
+
+                var validityTicks = GetRemainingValidityTicks(stopwatch);
+
+                _logger.LogDebug($"Acquired locks for {Resource} ({LockId}), validityTicks: {validityTicks}");
+
+                if (lockResult == LockInstanceResult.Success && validityTicks > 0)
+                {
+                    return LockStatus.Acquired;
+                }
+
+                await UnLockAsync().ConfigureAwait(false);
+
+                if (i < _quorumRetryCount - 1)
+                {
+                    var sleepMs = ThreadSafeRandom.Next(_quorumRetryDelayMs);
+                    _logger.LogDebug($"Sleeping {sleepMs}ms");
+
+                    await Task.Delay(sleepMs, _cancellationToken).ConfigureAwait(false);
+                }
+            }
+
+            var status = GetFailedLockStatus(lockResult);
+            return status;
+        }
+
+        private LockStatus GetFailedLockStatus(LockInstanceResult lockInstanceResult)
+        {
+            if (lockInstanceResult == LockInstanceResult.Conflicted)
+            {
+                return LockStatus.Conflicted;
+            }
+            else if (lockInstanceResult == LockInstanceResult.Success)
+            {
+                return LockStatus.Expired;
+            }
+            return LockStatus.NoQuorum;
+        }
+
+        private LockInstanceResult Lock()
+        {
+            LockInstanceResult result;
+
+            try
+            {
+                _logger.LogTrace($"Lock: {Resource}, {LockId}, {_expiryTime}");
+                var redisResult = _redisCache.SetNx(Resource, LockId, _expiryTime);
+
+                result = redisResult ? LockInstanceResult.Success : LockInstanceResult.Conflicted;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogDebug($"Error locking lock instance: {ex.Message}");
+
+                result = LockInstanceResult.Error;
+            }
+
+            return result;
+        }
+
+        private bool UnLock()
+        {
+            var result = false;
+
+            try
+            {
+                _logger.LogTrace($"UnLock: {Resource}, {LockId}");
+                result = (bool)_redisCache.GetDatabase().ScriptEvaluate(UnLockScript, new RedisKey[] { Resource }, new RedisValue[] { LockId });
+            }
+            catch(Exception ex)
+            {
+                _logger.LogDebug($"Error unlocking lock instance: {ex.Message}");
+            }
+
+            _logger.LogTrace($"Unlock exit: {Resource}, {LockId}, {result}");
+
+            return result;
+        }
+
+        private async Task<LockInstanceResult> LockAsync()
+        {
+            LockInstanceResult result;
+
+            try
+            {
+                _logger.LogTrace($"LockAsync: {Resource}, {LockId}, {_expiryTime}");
+                var redisResult = await _redisCache.SetNxAsync(Resource, LockId, _expiryTime).ConfigureAwait(false);
+
+                result = redisResult ? LockInstanceResult.Success : LockInstanceResult.Conflicted;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogDebug($"Error locking lock instance: {ex.Message}");
+                result = LockInstanceResult.Error;
+            }
+
+            return result;
+        }
+
+        private async Task<bool> UnLockAsync()
+        {
+            var result = false;
+
+            try
+            {
+                _logger.LogTrace($"UnLock: {Resource}, {LockId}");
+                result = (bool)await _redisCache.GetDatabase().ScriptEvaluateAsync(UnLockScript, new RedisKey[] { Resource }, new RedisValue[] { LockId });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogDebug($"Error unlocking lock instance: {ex.Message}");
+            }
+
+            _logger.LogTrace($"Unlock exit: {Resource}, {LockId}, {result}");
+
+            return result;
+        }
+
+        private void StartAutoExtendTimer()
+        {
+            var interval = _expiryTime.TotalMilliseconds / 2;
+
+            _logger.LogDebug($"Starting auto extend timer with {interval}ms interval");
+
+            _lockKeepaliveTimer = new Timer(
+                state => 
+                {
+                    try
+                    {
+                        _logger.LogTrace($"Lock renewal timer fired: {Resource} ({LockId})");
+
+                        var stopwatch = Stopwatch.StartNew();
+                        var lockResult = Extend();
+                        var validityTicks = GetRemainingValidityTicks(stopwatch);
+                        if (lockResult == LockInstanceResult.Success && validityTicks > 0)
+                        {
+                            Status = LockStatus.Acquired;
+                            ExtendCount++;
+
+                            _logger.LogDebug($"Extended lock, {Status}: {Resource} ({LockId})");
+                        }
+                    }
+                    catch(Exception ex)
+                    {
+                        _logger.LogError(null, ex, $"Lock renewal timer thread failed: {Resource} ({LockId})");
+                    }
+                },
+                null,
+                (int)interval,
+                (int)interval);
+        }
+
+        private LockInstanceResult Extend()
+        {
+            LockInstanceResult result;
+
+            try
+            {
+                _logger.LogTrace($"Extend enter: {Resource}, {LockId}, {_expiryTime}");
+
+                var extendResult = (long)_redisCache.GetDatabase().ScriptEvaluate(ExtendIfMatchingValueScript, new RedisKey[] { Resource }, new RedisValue[] { LockId, (long)_expiryTime.TotalMilliseconds });
+
+                result = extendResult == 1 ? LockInstanceResult.Success : extendResult == -1 ? LockInstanceResult.Conflicted : LockInstanceResult.Error;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogDebug($"Error extending lock instance: {ex.Message}");
+                result = LockInstanceResult.Error;
+            }
+
+            _logger.LogTrace($"Extend exit: {Resource}, {LockId}, {result}");
+
+            return result;
+        }
+
+        private long GetRemainingValidityTicks(Stopwatch sw)
+        {
+            var driftTicks = (long)(_expiryTime.Ticks * _clockDriftFactor) + TimeSpan.FromMilliseconds(2).Ticks;
+            var validityTicks = _expiryTime.Ticks - sw.Elapsed.Ticks - driftTicks;
+            return validityTicks;
         }
 
         public override void Dispose()
         {
-            throw new NotImplementedException();
+            Dispose(true);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            _logger.LogDebug($"Disposing {Resource} ({LockId})");
+
+            if (_isDisposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                lock(_lockObject)
+                {
+                    if (_lockKeepaliveTimer != null)
+                    {
+                        _lockKeepaliveTimer.Change(Timeout.Infinite, Timeout.Infinite);
+                        _lockKeepaliveTimer.Dispose();
+                        _lockKeepaliveTimer = null;
+                    }
+                }
+            }
+
+            UnLock();
+
+            Status = LockStatus.Unlocked;
+            _isDisposed = true;
         }
     }
 }
