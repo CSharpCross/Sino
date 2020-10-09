@@ -5,13 +5,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.1.1" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="2.1.1" />
-    <PackageReference Include="StackExchange.Redis" Version="2.1.58" />
+    <None Remove="Lua\Extend.lua" />
+    <None Remove="Lua\Unlock.lua" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Lua\" />
+    <EmbeddedResource Include="Lua\Extend.lua" />
+    <EmbeddedResource Include="Lua\Unlock.lua" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="2.1.1" />
+    <PackageReference Include="StackExchange.Redis" Version="2.1.58" />
   </ItemGroup>
 
 </Project>

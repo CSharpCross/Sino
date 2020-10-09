@@ -50,12 +50,12 @@ namespace Sino.Extensions.Redis
         /// <summary>
         /// 通信地址
         /// </summary>
-        public string Host { get; set; }
+        public string Host { get; set; } = "localhost";
 
         /// <summary>
         /// 通信端口
         /// </summary>
-        public int Port { get; set; }
+        public int Port { get; set; } = 6379;
 
         /// <summary>
         /// Redis 6开启ACL后的用户名
