@@ -1,19 +1,19 @@
-# SinoÑĞ·¢È«¼ÒÍ°  
+# OrvilleXç ”å‘å…¨å®¶æ¡¶  
 
-## Ïà¹ØÎÄµµ  
+## ç›¸å…³æ–‡æ¡£  
 
-1. [Sino.WebÎÄµµ](https://github.com/CSharpCross/Sino/blob/dev/docs/Sino_Web.md)  
+1. [Orvillex.Webæ–‡æ¡£](https://github.com/OrvilleX/OrvilleXCSharp/blob/dev/docs/Sino_Web.md)  
 
-×ñÊØÁËDDD¿ª·¢Ô­Ôò£¬½«»ù±¾³£ÓÃµÄÄ£ĞÍÒÔ¼°Ëã·¨½øĞĞµÄ·â×°£¬ÒÔÂú×ãÒµÎñ³¡¾°µÄ¿ìËÙ¿ª·¢¡£  
+éµå®ˆäº†DDDå¼€å‘åŸåˆ™ï¼Œå°†åŸºæœ¬å¸¸ç”¨çš„æ¨¡å‹ä»¥åŠç®—æ³•è¿›è¡Œçš„å°è£…ï¼Œä»¥æ»¡è¶³ä¸šåŠ¡åœºæ™¯çš„å¿«é€Ÿå¼€å‘ã€‚  
 
 
-2. [Sino.Extensions.AutoIndexÎÄµµ](https://github.com/CSharpCross/Sino/blob/dev/docs/Sino_AutoIndex.md)  
+2. [Orvillex.Extensions.AutoIndexæ–‡æ¡£](https://github.com/OrvilleX/OrvilleXCSharp/blob/dev/docs/Sino_AutoIndex.md)  
 
-Í¨¹ı²Î¿¼µÎµÎµÄIDÉú³É£¬½«¶ÔÓ¦Java SDK½øĞĞ¸ÄĞ´´Ó¶øÄÜ¹»Âú×ã.Net Core¿ª·¢ĞèÒª¡£  
+é€šè¿‡å‚è€ƒæ»´æ»´çš„IDç”Ÿæˆï¼Œå°†å¯¹åº”Java SDKè¿›è¡Œæ”¹å†™ä»è€Œèƒ½å¤Ÿæ»¡è¶³.Net Coreå¼€å‘éœ€è¦ã€‚  
 
-3. [Sino.Extensions.EventbusÎÄµµ](https://github.com/CSharpCross/Sino/blob/dev/docs/Sino_EventBus.md)  
+3. [Orvillex.Extensions.Eventbusæ–‡æ¡£](https://github.com/OrvilleX/OrvilleXCSharp/blob/dev/docs/Sino_EventBus.md)  
 
-Ìá¹©±ãĞ¯¿ìËÙµÄ·½Ê½Ê¹ÒµÎñ¿ìËÙÀûÓÃÊÂ¼ş×ÜÏß£¬½øĞĞ½âñî¡£  
+æä¾›ä¾¿æºå¿«é€Ÿçš„æ–¹å¼ä½¿ä¸šåŠ¡å¿«é€Ÿåˆ©ç”¨äº‹ä»¶æ€»çº¿ï¼Œè¿›è¡Œè§£è€¦ã€‚  
 
-4. [Sino.Extensions.RedisÎÄµµ](https://github.com/CSharpCross/Sino/blob/dev/docs/Sino_Redis.md)  
+4. [Orvillex.Extensions.Redisæ–‡æ¡£](https://github.com/OrvilleX/OrvilleXCSharp/blob/dev/docs/Sino_Redis.md)  
 
