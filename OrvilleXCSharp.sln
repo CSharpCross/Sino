@@ -3,9 +3,30 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{145B09E5-E8CF-4650-B3C0-33446948266D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{9318632C-1C6C-491D-BF60-069EC9E5710B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".global", ".global", "{A2FF5113-F3BF-4499-BD76-209A856307C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrvilleX", "src\OrvilleX\OrvilleX.csproj", "{EDF5F583-9E56-4069-9D9E-5491309FB6A8}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EDF5F583-9E56-4069-9D9E-5491309FB6A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDF5F583-9E56-4069-9D9E-5491309FB6A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDF5F583-9E56-4069-9D9E-5491309FB6A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDF5F583-9E56-4069-9D9E-5491309FB6A8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EDF5F583-9E56-4069-9D9E-5491309FB6A8} = {145B09E5-E8CF-4650-B3C0-33446948266D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CFD9EA53-D4BA-4613-A762-06F4EDCFDFD6}
