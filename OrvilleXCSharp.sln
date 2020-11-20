@@ -26,6 +26,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{C95E47E7-C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrvilleX.Dapper", "src\OrvilleX.Dapper\OrvilleX.Dapper.csproj", "{E46AF3AA-AD46-47DE-9AB7-E24DC00F0FA2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrvilleX.Cache", "src\OrvilleX.Cache\OrvilleX.Cache.csproj", "{A81D1DE4-C8C2-4630-AAE9-D625706999A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{E46AF3AA-AD46-47DE-9AB7-E24DC00F0FA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E46AF3AA-AD46-47DE-9AB7-E24DC00F0FA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E46AF3AA-AD46-47DE-9AB7-E24DC00F0FA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A81D1DE4-C8C2-4630-AAE9-D625706999A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A81D1DE4-C8C2-4630-AAE9-D625706999A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A81D1DE4-C8C2-4630-AAE9-D625706999A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A81D1DE4-C8C2-4630-AAE9-D625706999A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -47,6 +53,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{EDF5F583-9E56-4069-9D9E-5491309FB6A8} = {145B09E5-E8CF-4650-B3C0-33446948266D}
 		{E46AF3AA-AD46-47DE-9AB7-E24DC00F0FA2} = {145B09E5-E8CF-4650-B3C0-33446948266D}
+		{A81D1DE4-C8C2-4630-AAE9-D625706999A9} = {145B09E5-E8CF-4650-B3C0-33446948266D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CFD9EA53-D4BA-4613-A762-06F4EDCFDFD6}

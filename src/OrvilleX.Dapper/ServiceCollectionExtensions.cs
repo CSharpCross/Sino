@@ -1,11 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace OrvilleX.Dapper
 {
-    public static class DapperServiceCollectionExtensions
+    public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddDapper(this IServiceCollection services, string writeConnectionString, string readConnectionString)
         {
