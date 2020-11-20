@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrvilleX.AutoIndex", "src\O
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrvilleXTest", "test\OrvilleXTest\OrvilleXTest.csproj", "{C93F2136-633D-43D2-9293-3B4CD3AC5903}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrvilleXCacheTest", "test\OrvilleXCacheTest\OrvilleXCacheTest.csproj", "{614BF80A-4C9A-487B-8457-AC885851A1EC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +66,10 @@ Global
 		{C93F2136-633D-43D2-9293-3B4CD3AC5903}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C93F2136-633D-43D2-9293-3B4CD3AC5903}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C93F2136-633D-43D2-9293-3B4CD3AC5903}.Release|Any CPU.Build.0 = Release|Any CPU
+		{614BF80A-4C9A-487B-8457-AC885851A1EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{614BF80A-4C9A-487B-8457-AC885851A1EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{614BF80A-4C9A-487B-8457-AC885851A1EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{614BF80A-4C9A-487B-8457-AC885851A1EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +81,7 @@ Global
 		{3BE1235A-2A75-442A-B32D-7AE36D83FE47} = {145B09E5-E8CF-4650-B3C0-33446948266D}
 		{4337B609-C2D1-4CB4-909F-3EE996D9CC57} = {145B09E5-E8CF-4650-B3C0-33446948266D}
 		{C93F2136-633D-43D2-9293-3B4CD3AC5903} = {9318632C-1C6C-491D-BF60-069EC9E5710B}
+		{614BF80A-4C9A-487B-8457-AC885851A1EC} = {9318632C-1C6C-491D-BF60-069EC9E5710B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CFD9EA53-D4BA-4613-A762-06F4EDCFDFD6}
