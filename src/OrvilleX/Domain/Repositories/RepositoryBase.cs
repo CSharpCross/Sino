@@ -8,7 +8,7 @@ namespace OrvilleX.Domain.Repositories
     /// <summary>
     /// 仓储抽象基类
     /// </summary>
-    public abstract class AbpRepositoryBase<TEntity, TPrimaryKey> : IRepository<TEntity, TPrimaryKey> where TEntity : class, IEntity<TPrimaryKey>
+    public abstract class RepositoryBase<TEntity, TPrimaryKey> : IRepository<TEntity, TPrimaryKey> where TEntity : class, IEntity<TPrimaryKey>
 	{
 		public abstract Task<IEnumerable<TEntity>> GetAllListAsync();
 

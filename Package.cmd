@@ -1,0 +1,33 @@
+@echo off
+
+echo 请输入需要发版的包：
+
+echo 0. 退出
+echo 1. OrvilleX  
+echo 2. OrvilleX.EventBus
+echo 3. OrvilleX.Dapper
+echo 4. OrvilleX.AutoIndex
+echo 5. OrvilleX.Aliyun
+
+set /p packageNum=请输入编号：
+
+if %packageNum% == 1 (
+	echo 开始对OrvilleX发版
+	dotnet pack .\src\OrvilleX -c Release -o .\artifacts
+	dotnet nuget push .\artifacts\*.nupkg -k [密钥] -s https://api.nuget.org/v3/index.json
+) else if %packageNum% == 2 (
+	echo 开始对OrvilleX.EventBus发版
+	dotnet pack .\src\OrvilleX.EventBus -c Release -o .\artifacts
+	dotnet nuget push .\artifacts\*.nupkg -k [密钥] -s https://api.nuget.org/v3/index.json   
+) else if %packageNum% == 3 (
+	echo 开始对OrvilleX.Dapper发版
+	dotnet pack .\src\OrvilleX.Dapper -c Release -o .\artifacts
+	dotnet nuget push .\artifacts\*.nupkg -k [密钥] -s https://api.nuget.org/v3/index.json  
+) else if %packageNum% == 4 (
+    echo 开始对OrvilleX.AutoIndex发版
+    dotnet pack .\src\OrvilleX.AutoIndex -c Release -o .\artifacts
+    dotnet nuget push .\artifacts\*.nupkg -k [密钥] -s https://api.nuget.org/v3/index.json
+)
+rd /s/q .\artifacts
+
+pause
