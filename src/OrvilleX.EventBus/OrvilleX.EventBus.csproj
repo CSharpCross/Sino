@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>OrvilleX</Authors>
+    <Product>OrvilleX</Product>
+    <Version>1.0.0-beta1</Version>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Description>提供基于RabbitMQ的事件总线</Description>
+    <PackageProjectUrl>https://github.com/OrvilleX/OrvilleXCSharp</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/OrvilleX/OrvilleXCSharp</RepositoryUrl>
+    <PackageIcon>logo.jpg</PackageIcon>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>rabbitmq;eventbus</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="RabbitMQ.Client" Version="6.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OrvilleX\OrvilleX.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\logo.jpg">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>
