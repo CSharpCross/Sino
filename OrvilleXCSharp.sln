@@ -38,6 +38,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrvilleXCacheTest", "test\O
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrvilleXIntegrationTest", "test\OrvilleXIntegrationTest\OrvilleXIntegrationTest.csproj", "{91BB4C4E-6C8B-4946-8E10-9BAD71C2625E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrvilleXAutoIndexTest", "test\OrvilleXAutoIndexTest\OrvilleXAutoIndexTest.csproj", "{358DABD1-BB18-4A43-A002-6AFA1E3E4EC4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,6 +78,10 @@ Global
 		{91BB4C4E-6C8B-4946-8E10-9BAD71C2625E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91BB4C4E-6C8B-4946-8E10-9BAD71C2625E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91BB4C4E-6C8B-4946-8E10-9BAD71C2625E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{358DABD1-BB18-4A43-A002-6AFA1E3E4EC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{358DABD1-BB18-4A43-A002-6AFA1E3E4EC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{358DABD1-BB18-4A43-A002-6AFA1E3E4EC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{358DABD1-BB18-4A43-A002-6AFA1E3E4EC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -89,6 +95,7 @@ Global
 		{C93F2136-633D-43D2-9293-3B4CD3AC5903} = {9318632C-1C6C-491D-BF60-069EC9E5710B}
 		{614BF80A-4C9A-487B-8457-AC885851A1EC} = {9318632C-1C6C-491D-BF60-069EC9E5710B}
 		{91BB4C4E-6C8B-4946-8E10-9BAD71C2625E} = {9318632C-1C6C-491D-BF60-069EC9E5710B}
+		{358DABD1-BB18-4A43-A002-6AFA1E3E4EC4} = {9318632C-1C6C-491D-BF60-069EC9E5710B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CFD9EA53-D4BA-4613-A762-06F4EDCFDFD6}
