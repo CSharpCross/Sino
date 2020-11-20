@@ -30,6 +30,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrvilleX.Cache", "src\Orvil
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrvilleX.EventBus", "src\OrvilleX.EventBus\OrvilleX.EventBus.csproj", "{3BE1235A-2A75-442A-B32D-7AE36D83FE47}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrvilleX.AutoIndex", "src\OrvilleX.AutoIndex\OrvilleX.AutoIndex.csproj", "{4337B609-C2D1-4CB4-909F-3EE996D9CC57}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,6 +54,10 @@ Global
 		{3BE1235A-2A75-442A-B32D-7AE36D83FE47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BE1235A-2A75-442A-B32D-7AE36D83FE47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BE1235A-2A75-442A-B32D-7AE36D83FE47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4337B609-C2D1-4CB4-909F-3EE996D9CC57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4337B609-C2D1-4CB4-909F-3EE996D9CC57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4337B609-C2D1-4CB4-909F-3EE996D9CC57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4337B609-C2D1-4CB4-909F-3EE996D9CC57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +67,7 @@ Global
 		{E46AF3AA-AD46-47DE-9AB7-E24DC00F0FA2} = {145B09E5-E8CF-4650-B3C0-33446948266D}
 		{A81D1DE4-C8C2-4630-AAE9-D625706999A9} = {145B09E5-E8CF-4650-B3C0-33446948266D}
 		{3BE1235A-2A75-442A-B32D-7AE36D83FE47} = {145B09E5-E8CF-4650-B3C0-33446948266D}
+		{4337B609-C2D1-4CB4-909F-3EE996D9CC57} = {145B09E5-E8CF-4650-B3C0-33446948266D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CFD9EA53-D4BA-4613-A762-06F4EDCFDFD6}
