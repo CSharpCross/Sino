@@ -8,18 +8,18 @@ namespace OrvilleX.Dependency.Aop
     /// </summary>
     [Serializable]
     [AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
-    public class SinoInterceptorAttribute : InterceptorAttribute
+    public class DefaultInterceptorAttribute : InterceptorAttribute
     {
         /// <summary>
         /// 通过组件名
         /// </summary>
-        public SinoInterceptorAttribute(string componentKey)
+        public DefaultInterceptorAttribute(string componentKey)
             : base(componentKey) { }
 
         /// <summary>
         /// 通过组件类型
         /// </summary>
-        public SinoInterceptorAttribute(Type interceptorType)
+        public DefaultInterceptorAttribute(Type interceptorType)
             : base(interceptorType) { }
     }
 }

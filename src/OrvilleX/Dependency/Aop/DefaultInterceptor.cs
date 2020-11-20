@@ -5,7 +5,7 @@ namespace OrvilleX.Dependency.Aop
     /// <summary>
     /// AOP根类
     /// </summary>
-    public class SinoInterceptor : ISinoInterceptor
+    public class DefaultInterceptor : IInterceptor
     {
 		public void Intercept(IInvocation invocation)
 		{

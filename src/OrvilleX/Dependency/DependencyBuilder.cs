@@ -53,7 +53,7 @@ namespace OrvilleX.Dependency
             return this;
         }
 
-        public IDependencyBuilder AddInterceptor<TInterceptor>(string name = null) where TInterceptor : ISinoInterceptor
+        public IDependencyBuilder AddInterceptor<TInterceptor>(string name = null) where TInterceptor : IInterceptor
         {
             _interceptorInfo.Add(new InterceptorInfo
             {

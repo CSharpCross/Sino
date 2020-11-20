@@ -17,7 +17,7 @@ namespace OrvilleX.Dependency
         /// </summary>
         /// <typeparam name="TInterceptor">AOP类型</typeparam>
         /// <param name="name">AOP名称，可选</param>
-        IDependencyBuilder AddInterceptor<TInterceptor>(string name = null) where TInterceptor : ISinoInterceptor;
+        IDependencyBuilder AddInterceptor<TInterceptor>(string name = null) where TInterceptor : IInterceptor;
 
         /// <summary>
         /// 构建依赖注入对象，需要将其进行返回。
