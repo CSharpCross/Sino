@@ -8,7 +8,7 @@ echo 2. OrvilleX.EventBus
 echo 3. OrvilleX.Dapper
 echo 4. OrvilleX.AutoIndex
 echo 5. OrvilleX.Cache
-echo 6. 
+echo 6. OrvilleX.MongoDB
 
 set /p packageNum=请输入编号：
 
@@ -31,6 +31,10 @@ if %packageNum% == 1 (
 ) else if %packageNum% == 5 (
 	echo 开始对OrvilleX.Cache发版
 	dotnet pack .\src\OrvilleX.Cache -c Release -o .\artifacts
+	dotnet nuget push .\artifacts\*.nupkg -k [密钥] -s https://api.nuget.org/v3/index.json
+) else if %packageNum% == 6 (
+	echo 开发对OrvilleX.MongoDB发版
+	dotnet pack .\src\OrvilleX.MongoDB -c Release -o .\artifacts
 	dotnet nuget push .\artifacts\*.nupkg -k [密钥] -s https://api.nuget.org/v3/index.json
 )
 rd /s/q .\artifacts

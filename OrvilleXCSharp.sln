@@ -19,6 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{C95E47E7-C
 	ProjectSection(SolutionItems) = preProject
 		docs\OrvilleX.md = docs\OrvilleX.md
 		docs\OrvilleXAutoIndex.md = docs\OrvilleXAutoIndex.md
+		docs\OrvilleXAutoMapper.md = docs\OrvilleXAutoMapper.md
 		docs\OrvilleXDependency.md = docs\OrvilleXDependency.md
 		docs\OrvilleXEventBus.md = docs\OrvilleXEventBus.md
 		docs\OrvilleXRedis.md = docs\OrvilleXRedis.md
@@ -42,7 +43,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrvilleXAutoIndexTest", "te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BenchmarkTest", "test\BenchmarkTest\BenchmarkTest.csproj", "{6C31E325-5875-4D74-8A55-8A078072E7B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrvilleX.MongoDB", "src\OrvilleX.MongoDB\OrvilleX.MongoDB.csproj", "{2ACF3BCF-7B72-4BF1-9337-EBC2221423DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrvilleX.MongoDB", "src\OrvilleX.MongoDB\OrvilleX.MongoDB.csproj", "{2ACF3BCF-7B72-4BF1-9337-EBC2221423DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrvilleX.AutoMapper", "src\OrvilleX.AutoMapper\OrvilleX.AutoMapper.csproj", "{FE10C9FE-AE8E-4DCD-A1E8-EA43B2973ECF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -94,6 +97,10 @@ Global
 		{2ACF3BCF-7B72-4BF1-9337-EBC2221423DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2ACF3BCF-7B72-4BF1-9337-EBC2221423DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2ACF3BCF-7B72-4BF1-9337-EBC2221423DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE10C9FE-AE8E-4DCD-A1E8-EA43B2973ECF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE10C9FE-AE8E-4DCD-A1E8-EA43B2973ECF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE10C9FE-AE8E-4DCD-A1E8-EA43B2973ECF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE10C9FE-AE8E-4DCD-A1E8-EA43B2973ECF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -110,6 +117,7 @@ Global
 		{358DABD1-BB18-4A43-A002-6AFA1E3E4EC4} = {9318632C-1C6C-491D-BF60-069EC9E5710B}
 		{6C31E325-5875-4D74-8A55-8A078072E7B9} = {9318632C-1C6C-491D-BF60-069EC9E5710B}
 		{2ACF3BCF-7B72-4BF1-9337-EBC2221423DD} = {145B09E5-E8CF-4650-B3C0-33446948266D}
+		{FE10C9FE-AE8E-4DCD-A1E8-EA43B2973ECF} = {145B09E5-E8CF-4650-B3C0-33446948266D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CFD9EA53-D4BA-4613-A762-06F4EDCFDFD6}
