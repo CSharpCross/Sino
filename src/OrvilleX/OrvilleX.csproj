@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Version>1.0.0-beta1</Version>
     <Authors />
     <Description>Web开发核心自研库</Description>
@@ -22,10 +22,6 @@
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="2.2.0" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.9.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Application\" />
   </ItemGroup>
 
   <ItemGroup>
