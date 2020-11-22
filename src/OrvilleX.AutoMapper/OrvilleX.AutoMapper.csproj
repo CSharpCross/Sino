@@ -2,6 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>OrvilleX</Authors>
+    <Product>OrvilleX</Product>
+    <Description>提供实体映射</Description>
+    <Version>1.0.0-beta1</Version>
+    <PackageProjectUrl>https://github.com/OrvilleX/OrvilleXCSharp</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/OrvilleX/OrvilleXCSharp</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>automapper;dto</PackageTags>
+    <PackageIcon>logo.jpg</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,6 +19,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OrvilleX\OrvilleX.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\logo.jpg">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

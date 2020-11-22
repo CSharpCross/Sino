@@ -2,11 +2,26 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>OrvilleX</Authors>
+    <Product>OrvilleX</Product>
+    <Description>提供服务端文件存储</Description>
+    <PackageProjectUrl>https://github.com/OrvilleX/OrvilleXCSharp</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/OrvilleX/OrvilleXCSharp</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>oss;file;</PackageTags>
+    <PackageIcon>logo.jpg</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="aliyun.oss.sdk.core" Version="2.5.3" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\logo.jpg">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
