@@ -9,7 +9,7 @@ namespace Microsoft.Extensions.DependencyInjection
     /// <summary>
     /// 标准基础库依赖
     /// </summary>
-    public static class SinoServiceCollectionExtensions
+    public static class ServiceCollectionExtensions
     {
         /// <summary>
         /// 创建依赖注入对象并自动根据接口注入

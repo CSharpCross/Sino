@@ -11,7 +11,7 @@ echo 5. OrvilleX.Cache
 echo 6. OrvilleX.MongoDB
 echo 7. OrvilleX.AutoMapper
 
-apikey = "";
+set apikey=oy2lr3xiu3rygnb3v5jq5wjsenvsyc7e5biu44zbrralgu
 set /p packageNum=«Î ‰»Î±‡∫≈£∫
 
 if %packageNum% == 1 (
