@@ -347,7 +347,30 @@ public IServiceProvider ConfigureServices(IServiceCollection services)
 
     return builder.Build();
 }
-```
+```  
+
+在asp.net core 3.0的版本中已经不能通过`ConfigureServices`返回`IServiceProvider`接口了，我们需要通过如下方式进行
+注册:    
+
+```csharp
+public static IHostBuilder CreateHostBuilder(string[] args) =>
+    Host.CreateDefaultBuilder(args)
+        .ConfigureWebHostDefaults(webBuilder =>
+        {
+            webBuilder.UseStartup<Startup>();
+        }).UseServiceProviderFactory(new OrvillexServiceProviderFactory());
+```  
+
+其中主要的就是`UseServiceProviderFactory`方法，然后在打开`StartUp.cs`文件写入如下方法。  
+
+```csharp
+public void ConfigureContainer(IDependencyBuilder builder)
+{
+            
+}
+```  
+
+即可正常使用了。  
 
 更详细的使用方式请参考[该文档](https://github.com/CSharpCross/Sino/blob/dev/docs/OrvilleXDependency.md)
 

@@ -42,7 +42,7 @@ namespace OrvilleX.Dependency
             );
         }
 
-        public IDependencyBuilder AddAssembly(IEnumerable<Type> types)
+        public IDependencyBuilder AddAssembly(params Type[] types)
         {
             if (types == null || types.Count() <= 0)
             {
@@ -117,17 +117,17 @@ namespace OrvilleX.Dependency
         /// </summary>
         private void DependencyAutoRegister()
         {
-            if (_types.Count > 0)
+            foreach (var type in _types)
             {
-                _container.Register(Classes.From(_types)
-                    .BasedOn<ISingletonDependency>()
+                _container.Register(Classes.FromAssembly(type.Assembly)
+                    .BasedOn(typeof(ISingletonDependency))
                     .If(type => !type.GetTypeInfo().IsGenericTypeDefinition)
                     .WithService.Self()
                     .WithService.DefaultInterfaces()
                     .LifestyleSingleton());
 
-                _container.Register(Classes.From(_types)
-                    .BasedOn<ITransientDependency>()
+                _container.Register(Classes.FromAssembly(type.Assembly)
+                    .BasedOn(typeof(ITransientDependency))
                     .If(type => !type.GetTypeInfo().IsGenericTypeDefinition)
                     .WithService.Self()
                     .WithService.DefaultInterfaces()

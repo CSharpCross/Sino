@@ -1,6 +1,8 @@
-﻿namespace OrvilleXTest.Fake
+﻿using OrvilleX.Dependency;
+
+namespace OrvilleXTest.Fake
 {
-    public interface ICalcService
+    public interface ICalcService : ISingletonDependency
 	{
 		bool Disposed { get; }
 		bool Initialized { get; }

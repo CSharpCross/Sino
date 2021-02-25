@@ -10,7 +10,7 @@ namespace OrvilleX.Dependency
         /// 添加需要自动注入的模块类型，多次调用将会叠加。
         /// </summary>
         /// <param name="types">类型列表</param>
-        IDependencyBuilder AddAssembly(IEnumerable<Type> types);
+        IDependencyBuilder AddAssembly(params Type[] types);
 
         /// <summary>
         /// 添加AOP对象

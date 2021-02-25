@@ -48,6 +48,14 @@ namespace OrvilleXTest
         }
 
         [Fact]
+        public void TestAutoDependence()
+        {
+            var container = _serviceCollection.CreateContainer().AddAssembly(typeof(ICalcService)).Build();
+
+            var calcService = container.GetServices<ICalcService>();
+        }
+
+        [Fact]
         public void CanSetInterceptorWithMany()
         {
             _serviceCollection.AddTransient<ICalcService, CalculatorServiceWithStandartInterceptorTwo>();
