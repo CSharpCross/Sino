@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net5</TargetFramework>
     <Authors>OrvilleX</Authors>
     <Product>OrvilleX</Product>
     <Description>提供实体映射</Description>

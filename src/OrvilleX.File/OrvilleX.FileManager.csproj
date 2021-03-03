@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net5</TargetFramework>
     <Authors>OrvilleX</Authors>
     <Product>OrvilleX</Product>
     <Description>提供服务端文件存储</Description>
@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <PackageReference Include="aliyun.oss.sdk.core" Version="2.5.3" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>

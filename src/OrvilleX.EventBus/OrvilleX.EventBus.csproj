@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net5</TargetFramework>
     <Authors>OrvilleX</Authors>
     <Product>OrvilleX</Product>
     <Version>1.0.0-beta1</Version>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using OrvilleX.AutoIndex;
 using OrvilleX.AutoIndex.Generator;
+using OrvilleX.AutoIndex.Mock;
 using System;
 using System.Linq;
 
@@ -8,6 +9,7 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class ServiceCollectionExtensions
     {
+
         public static IServiceCollection AddTinyId(this IServiceCollection services, IConfigurationSection section)
         {
             var cfg = new TinyIdClientConfiguration();
@@ -15,7 +17,16 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton(cfg);
 
             services.AddSingleton<ITinyIdClient, TinyIdClient>();
-            services.AddSingleton<IIdGeneratorFactory, IdGeneratorFactoryClient>();
+
+            if (cfg.Servers == null || cfg.Servers.Count == 0)
+            {
+                services.AddSingleton<IIdGeneratorFactory, MockIdGeneratorFactory>();
+            } 
+            else
+            {
+
+                services.AddSingleton<IIdGeneratorFactory, IdGeneratorFactoryClient>();
+            }
 
             return services;
         }
