@@ -1,14 +1,12 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Linq;
 
 namespace System
 {
-	/// <summary>
-	/// 基础类型扩展
-	/// </summary>
+    /// <summary>
+    /// 基础类型扩展
+    /// </summary>
     public static class ObjectExtensions
 	{
 		/// <summary>
@@ -17,26 +15,6 @@ namespace System
 		public static T As<T>(this object obj) where T : class
 		{
 			return (T)obj;
-		}
-
-		/// <summary>
-		/// 将实体转换为Json字符串
-		/// </summary>
-		public static string ToJsonString(this object obj, bool camelCase = false, bool indented = false)
-		{
-			var options = new JsonSerializerSettings();
-
-			if (camelCase)
-			{
-				options.ContractResolver = new CamelCasePropertyNamesContractResolver();
-			}
-
-			if (indented)
-			{
-				options.Formatting = Formatting.Indented;
-			}
-
-			return JsonConvert.SerializeObject(obj, options) == "null" ? "[]" : JsonConvert.SerializeObject(obj, options);
 		}
 
 		/// <summary>

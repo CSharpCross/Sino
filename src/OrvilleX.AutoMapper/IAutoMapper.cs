@@ -14,7 +14,6 @@ namespace OrvilleX.AutoMapper
         /// <param name="source">需要被映射的实体</param>
         TDestination Map<TDestination>(object source);
 
-
         TDestination Map<TSource, TDestination>(TSource source);
 
         TDestination Map<TSource, TDestination>(TSource source, TDestination destination);
